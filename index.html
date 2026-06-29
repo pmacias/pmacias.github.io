@@ -192,8 +192,14 @@
   .about-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 4rem;
+    grid-template-rows: auto auto;
+    gap: 2rem 4rem;
     align-items: start;
+  }
+
+  .about-bio {
+    grid-column: 1;
+    grid-row: 1;
   }
 
   .about-bio p {
@@ -205,10 +211,35 @@
 
   .about-bio p:last-child { margin-bottom: 0; }
 
+  .about-photo-wrap {
+    grid-column: 2;
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .about-photo {
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+  }
+
+  .about-photo-caption {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--ink-faint);
+    letter-spacing: 0.06em;
+  }
+
   .about-stats {
+    grid-column: 1 / -1;
+    grid-row: 2;
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
   }
 
   .stat-block {
@@ -524,7 +555,6 @@
     section { padding: 3.5rem 1.5rem; }
     .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
     .projects-grid { grid-template-columns: 1fr; }
-    .contact-inner { grid-template-columns: 1fr; gap: 2.5rem; }
     .pub-item { grid-template-columns: 60px 1fr; }
     .pub-tag { display: none; }
     .hero-coords { display: none; }
@@ -576,11 +606,11 @@
         <div class="skills-group">
           <p class="skills-group-label">Simulation &amp; HPC</p>
           <div class="skills-row">
-            <span class="skill-tag">Monte Carlo methods</span>
-            <span class="skill-tag">HPC / Slurm</span>
-            <span class="skill-tag">uncertainty quantification</span>
             <span class="skill-tag">simulation infrastructure</span>
             <span class="skill-tag">reproducible pipelines</span>
+            <span class="skill-tag">HPC / Slurm</span>
+            <span class="skill-tag">uncertainty quantification</span>
+            <span class="skill-tag">Monte Carlo methods</span>
           </div>
         </div>
         <div class="skills-group">
@@ -605,7 +635,14 @@
         </div>
       </div>
     </div>
+    <div class="about-photo-wrap">
+      <img src="phil_website_pic_cropped.jpg" alt="Phillip Macias" class="about-photo">
+    </div>
     <div class="about-stats">
+      <div class="stat-block">
+        <div class="stat-num">PhD</div>
+        <div class="stat-label">Astronomy &amp; Astrophysics, UC Santa Cruz</div>
+      </div>
       <div class="stat-block">
         <div class="stat-num">15</div>
         <div class="stat-label">Years of research</div>
@@ -617,10 +654,6 @@
       <div class="stat-block">
         <div class="stat-num">731</div>
         <div class="stat-label">Journal citations</div>
-      </div>
-      <div class="stat-block">
-        <div class="stat-num">PhD</div>
-        <div class="stat-label">Astronomy &amp; Astrophysics, UC Santa Cruz</div>
       </div>
     </div>
   </div>
@@ -660,7 +693,7 @@
       <p class="project-status">postdoctoral</p>
       <h3 class="project-name">NASA Roman Space Telescope</h3>
       <div class="project-body">
-        <p>As a postdoctoral researcher in the Astronomy and Astrophysics Department at UC Santa Cruz, I had the privilege of helping design the High Latitude Time Domain Survey (HLTDS) for the Nancy Grace Roman Space Telescope (Roman), a NASA flagship mission set to launch in August 2026.   </p>
+        <p>As a postdoctoral researcher in the Astronomy and Astrophysics Department at UC Santa Cruz, I had the privilege of helping design the High Latitude Time Domain Survey (HLTDS) for the Nancy Grace Roman Space Telescope (Roman), a NASA flagship mission set to launch in August 2026.</p>
         <p>I served as a member of a Science Investigation Team, creating and analyzing simulated "observations" to ensure our survey strategy met NASA dark-energy requirements. The technical report we produced served as the basis for the strategy that will be employed once the HLTDS begins in late 2028! Learn more about Roman at the link below.</p>
       </div>
       <a class="project-link" href="https://roman.gsfc.nasa.gov" target="_blank">roman.gsfc.nasa.gov →</a>
