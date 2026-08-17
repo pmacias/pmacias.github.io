@@ -410,6 +410,15 @@
     border-color: transparent;
   }
 
+  .project-date {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--ink-faint);
+    letter-spacing: 0.05em;
+    margin-left: 0.5rem;
+  }
+
   .project-name {
     font-family: var(--display);
     font-size: 1.2rem;
@@ -636,12 +645,12 @@
     <div class="projects-grid">
 
       <article class="project-card">
-        <p class="project-status active">active</p>
-        <h3 class="project-name">Climate ML</h3>
+        <p class="project-status active">active<span class="project-date">2026</span></p>
+        <h3 class="project-name">Flashpoint</h3>
         <div class="project-body">
-          <p>I am currently applying geospatial data analysis and machine learning to climate and earth observation problems. Current work includes ERA5 reanalysis data to compute precipitation anomalies and a Thornthwaite potential evapotranspiration dryness index, and a Canadian Fire Weather Index reconstruction pipeline targeting XGBoost modeling with SHAP-based feature attribution.</p>
+          <p>Flashpoint predicts whether an active wildfire will escalate or stay contained, using only the first one to two days of fire and weather data. It combines weather, topography, and vegetation features in an Explainable Boosting Machine, reaching 82.6% accuracy (0.754 macro-F1) on the binary escalation task, with XGBoost kept as a secondary robustness check.</p>
         </div>
-        <span class="project-link" style="cursor:default; opacity:0.5;">coming soon</span>
+        <a class="project-link" href="https://github.com/pmacias/flashpoint" target="_blank">view on github →</a>
 
         <h3 class="project-name">Product Exploration</h3>
         <div class="project-body">
@@ -699,6 +708,10 @@
       <a class="contact-link" href="mailto:phillip.j.macias@gmail.com">
         <span class="contact-link-label">Email</span>
         <span class="contact-link-value">phillip.j.macias@gmail.com</span>
+      </a>
+      <a class="contact-link" href="https://github.com/pmacias" target="_blank">
+        <span class="contact-link-label">GitHub</span>
+        <span class="contact-link-value">github.com/pmacias</span>
       </a>
       <a class="contact-link" href="https://www.linkedin.com/in/phillipjmacias/" target="_blank">
         <span class="contact-link-label">LinkedIn</span>
