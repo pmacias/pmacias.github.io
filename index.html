@@ -726,15 +726,52 @@
 </div>
 
 <script>
-  function showPage(name) {
+  const ROUTES = ['home', 'about', 'projects', 'contact'];
+
+  function safePushState(state, path) {
+    try {
+      history.pushState(state, '', path);
+    } catch (e) {
+      // Sandboxed preview contexts (e.g. srcdoc iframes) can't set history
+      // state tied to a real URL — just skip it, page still works.
+    }
+  }
+
+  function pathToPage(pathname) {
+    const clean = pathname.replace(/\/index\.html$/, '').replace(/\/$/, '').split('/').pop();
+    return ROUTES.includes(clean) ? clean : 'home';
+  }
+
+  function showPage(name, push = true) {
     document.querySelectorAll('.page, .hero-page').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
     const target = document.getElementById('page-' + name);
     if (target) target.classList.add('active');
     const navEl = document.getElementById('nav-' + name);
     if (navEl) navEl.classList.add('active');
+    if (push) {
+      const path = name === 'home' ? '/' : '/' + name;
+      safePushState({ page: name }, path);
+    }
+    window.scrollTo(0, 0);
     return false;
   }
+
+  window.addEventListener('popstate', (e) => {
+    const name = (e.state && e.state.page) || pathToPage(location.pathname);
+    showPage(name, false);
+  });
+
+  // On load: honor a path saved by 404.html (see that file for why),
+  // otherwise just read the current URL directly.
+  (function initRoute() {
+    const redirect = sessionStorage.redirect;
+    delete sessionStorage.redirect;
+    const initialPath = redirect || location.pathname;
+    const name = pathToPage(initialPath);
+    safePushState({ page: name }, name === 'home' ? '/' : '/' + name);
+    showPage(name, false);
+  })();
 </script>
 
 </body>
