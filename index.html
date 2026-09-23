@@ -12,7 +12,7 @@
     --white: #f6f8f9;
     --off: #eef2f5;
     --ink: #0f1923;
-    --ink-mid: #445566;
+    --ink-mid: #35434f;
     --ink-faint: #8899aa;
     --green: #0d7377;
     --green-light: #e0f4f4;
@@ -157,7 +157,7 @@
     max-width: 44ch;
     line-height: 1.75;
     margin-bottom: 2.5rem;
-    font-weight: 300;
+    font-weight: 400;
   }
 
   .hero-pills {
@@ -282,7 +282,7 @@
 
   .about-bio p {
     color: var(--ink-mid);
-    font-weight: 300;
+    font-weight: 400;
     margin-bottom: 1rem;
     font-size: 1rem;
     line-height: 1.7;
@@ -366,7 +366,7 @@
     border: 1px solid var(--rule);
     padding: 0.3rem 0.7rem;
     border-radius: 999px;
-    font-weight: 300;
+    font-weight: 400;
   }
 
   /* PROJECTS */
@@ -442,7 +442,7 @@
   .project-body {
     font-size: 0.95rem;
     color: var(--ink-mid);
-    font-weight: 300;
+    font-weight: 400;
     line-height: 1.65;
     margin-bottom: 0.6rem;
   }
@@ -531,6 +531,37 @@
   .hero-page.active .hero-left {
     animation: fadeIn 0.35s ease both;
   }
+
+  /* MOBILE */
+  @media (max-width: 800px) {
+    body { overflow: auto; }
+    nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+    .nav-name { font-size: 12px; white-space: nowrap; }
+    .nav-links { gap: 0.1rem; }
+    .nav-links a { font-size: 12px; padding: 0.35rem 0.6rem; white-space: nowrap; }
+    #nav-contact .full { display: none; }
+
+    .page { height: auto; min-height: 100vh; overflow: visible; }
+    .hero-page { height: auto; min-height: 100vh; overflow: visible; }
+    .hero-page.active { flex-direction: column; }
+    .hero-left { padding: 2.5rem 1.25rem 2rem; }
+    .hero-name { font-size: 3rem; }
+    .hero-right { width: 100%; height: 280px; }
+
+    .page-inner { padding: 2rem 1.25rem; }
+    .section-header { margin-bottom: 1.5rem; }
+
+    .about-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+    .about-bio, .about-photo-wrap, .about-stats { grid-column: 1; grid-row: auto; }
+    .about-photo-wrap { order: -1; }
+    .about-stats { grid-template-columns: 1fr 1fr; }
+    .stat-num { font-size: 2rem; }
+
+    .projects-grid { grid-template-columns: 1fr; }
+    .project-card { padding: 1.4rem; }
+
+    .page-footer { padding: 1.5rem 1.25rem; flex-direction: column; gap: 0.25rem; align-items: flex-start; }
+  }
 </style>
 </head>
 <body>
@@ -540,7 +571,7 @@
   <ul class="nav-links">
     <li><a href="#" onclick="return showPage('about')" id="nav-about">About</a></li>
     <li><a href="#" onclick="return showPage('projects')" id="nav-projects">Projects</a></li>
-    <li><a href="#" onclick="return showPage('contact')" id="nav-contact">Resume &amp; Contact</a></li>
+    <li><a href="#" onclick="return showPage('contact')" id="nav-contact">Resume<span class="full"> &amp; Contact</span></a></li>
   </ul>
 </nav>
 
@@ -664,7 +695,7 @@
 
         <h3 class="project-name">Flashpoint</h3>
         <div class="project-body">
-          <p>Flashpoint predicts whether an active wildfire will escalate or stay contained, using only the first one to two days of fire and weather data. It combines weather, topography, and vegetation features in an Explainable Boosting Machine, reaching 82.6% accuracy (0.754 macro-F1) on the binary escalation task, with XGBoost kept as a secondary robustness check.</p>
+          <p>Flashpoint predicts whether an active wildfire will escalate or stay contained, using only the first one to two days of fire and weather data. It combines weather, topography, and vegetation features in an Explainable Boosting Machine, reaching 0.75 macro-F1 on the binary escalation task against 0.42 for a majority-class baseline, and catching 95% of fires that went on to escalate. XGBoost is kept as a secondary robustness check.</p>
         </div>
         <a class="project-link" href="https://github.com/pmacias/flashpoint" target="_blank">view on github →</a>
 
@@ -679,10 +710,10 @@
         <p class="project-status">postdoctoral</p>
         <h3 class="project-name">NASA Roman Space Telescope</h3>
         <div class="project-body">
-          <p>As a postdoctoral researcher in the Astronomy and Astrophysics Department at UC Santa Cruz, I had the privilege of helping design the High Latitude Time Domain Survey (HLTDS) for the Nancy Grace Roman Space Telescope (Roman), a NASA flagship mission set to launch in August 2026.</p>
-          <p>I served as a member of a Science Investigation Team, creating and analyzing simulated "observations" to ensure our survey strategy met NASA dark-energy requirements. The technical report we produced served as the basis for the strategy that will be employed once the HLTDS begins in late 2028! Learn more about Roman at the link below.</p>
+          <p>I helped design the High Latitude Time Domain Survey (HLTDS) for NASA's Nancy Grace Roman Space Telescope, a flagship mission that launched in August 2026. The survey design our team recommended beat NASA's dark-energy requirement and became the basis for the survey's observing strategy.</p>
+          <p>As a postdoc at UC Santa Cruz and a member of a Science Investigation Team, I ran and analyzed about 500 simulated survey campaigns, comparing candidate designs (depth, cadence, filters) on a single figure-of-merit. The survey itself is scheduled to begin in late 2028. Learn more about it at the link below.</p>
         </div>
-        <a class="project-link" href="https://roman.gsfc.nasa.gov" target="_blank">roman.gsfc.nasa.gov →</a>
+        <a class="project-link" href="https://science.nasa.gov/mission/roman-space-telescope/high-latitude-time-domain-survey/" target="_blank">roman high latitude time domain survey →</a>
       </article>
 
       <article class="project-card">
