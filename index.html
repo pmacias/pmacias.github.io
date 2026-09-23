@@ -695,7 +695,7 @@
 
         <h3 class="project-name">Flashpoint</h3>
         <div class="project-body">
-          <p>Flashpoint predicts whether an active wildfire will escalate or stay contained, using only the first one to two days of fire and weather data. It combines weather, topography, and vegetation features in an Explainable Boosting Machine, reaching 0.75 macro-F1 on the binary escalation task against 0.42 for a majority-class baseline, and catching 95% of fires that went on to escalate. XGBoost is kept as a secondary robustness check.</p>
+          <p>Flashpoint predicts whether an active wildfire will escalate or stay contained, using only the first one to two days of fire and weather data. It combines weather, topography, and vegetation features in an Explainable Boosting Machine, reaching 0.75 macro-F1 on the binary escalation task against 0.42 for a majority-class baseline, and catching 95% of fires that went on to escalate. XGBoost with GFS forecast features edges it on macro-F1, but the EBM is kept as primary for its higher escalation recall.</p>
         </div>
         <a class="project-link" href="https://github.com/pmacias/flashpoint" target="_blank">view on github →</a>
 
