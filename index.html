@@ -3,27 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Phillip J. Macias — Data Scientist</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Mono:wght@300;400&family=Fraunces:ital,wght@0,400;1,300;1,400&display=swap" rel="stylesheet">
+<title>Phillip Macias — Data Scientist</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300;1,6..72,400&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-    --white: #f6f8f9;
-    --off: #eef2f5;
-    --ink: #0f1923;
-    --ink-mid: #35434f;
-    --ink-faint: #8899aa;
-    --green: #0d7377;
-    --green-light: #e0f4f4;
-    --green-mid: #14a0a5;
-    --orange: #e85d20;
-    --blue: #1a4fa0;
-    --yellow: #e8a800;
-    --rule: rgba(15,25,35,0.08);
-    --sans: 'DM Sans', system-ui, sans-serif;
-    --mono: 'DM Mono', monospace;
-    --display: 'Fraunces', Georgia, serif;
+    --white: #284a72; --off: #30557f; --surface: #30557f;
+    --ink: #f3f6fa; --ink-mid: #c9d6e6; --ink-faint: #8ea6c3;
+    --green: #ff9273; --green-light: rgba(255,146,115,0.16); --green-mid: #ffab92; --on-accent: #1f3350;
+    --rule: rgba(243,246,250,0.14); --lift: rgba(8,20,38,0.4); --backdrop: rgba(8,20,38,0.5);
+    --sans: 'Inter', system-ui, sans-serif; --mono: 'JetBrains Mono', monospace; --display: 'Newsreader', Georgia, serif;
     --radius: 12px;
   }
 
@@ -80,7 +70,7 @@
   }
 
   .nav-links a:hover { background: var(--off); color: var(--ink); }
-  .nav-links a.active { background: var(--green); color: white; }
+  .nav-links a.active { background: var(--green); color: var(--on-accent); }
 
   /* PAGES */
   .page {
@@ -187,7 +177,7 @@
     font-family: var(--sans);
     font-size: 13px;
     font-weight: 600;
-    color: white;
+    color: var(--on-accent);
     background: var(--green);
     padding: 0.6rem 1.5rem;
     border-radius: 999px;
@@ -280,7 +270,7 @@
 
   .about-bio { grid-column: 1; grid-row: 1; }
 
-  .about-bio p {
+  .about-bio > p {
     color: var(--ink-mid);
     font-weight: 400;
     margin-bottom: 1rem;
@@ -288,7 +278,7 @@
     line-height: 1.7;
   }
 
-  .about-bio p:last-child { margin-bottom: 0; }
+  .about-bio > p:last-child { margin-bottom: 0; }
 
   .about-photo-wrap {
     grid-column: 2;
@@ -303,39 +293,6 @@
     object-fit: cover;
     object-position: center top;
     display: block;
-  }
-
-  .about-stats {
-    grid-column: 1 / -1;
-    grid-row: 2;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1rem;
-  }
-
-  .stat-block {
-    padding: 1.5rem;
-    background: var(--off);
-    border-radius: var(--radius);
-    border-top: 3px solid var(--green);
-  }
-
-  .stat-num {
-    font-family: var(--display);
-    font-size: 2.5rem;
-    font-weight: 400;
-    color: var(--ink);
-    line-height: 1;
-    margin-bottom: 0.35rem;
-  }
-
-  .stat-label {
-    font-family: var(--mono);
-    font-size: 10px;
-    color: var(--ink-faint);
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    line-height: 1.4;
   }
 
   /* SKILLS */
@@ -369,99 +326,383 @@
     font-weight: 400;
   }
 
-  /* PROJECTS */
-  .projects-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.25rem;
+  /* PROJECT + RESEARCH PAGES */
+  .page-intro {
+    max-width: 62ch;
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: var(--ink-mid);
+    margin-bottom: 2.5rem;
   }
+  .project-link.intro-link { margin: -1.5rem 0 2.5rem; }
 
-  .project-card {
-    padding: 1.75rem;
-    background: var(--off);
-    border-radius: var(--radius);
-    border: 1px solid var(--rule);
+  .q-list { list-style: none; max-width: 900px; }
+  .q-list li { position: relative; }
+
+  .q-btn {
+    all: unset;
+    box-sizing: border-box;
     position: relative;
-    transition: box-shadow 0.2s, transform 0.2s;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    column-gap: 2rem;
+    align-items: center;
+    width: 100%;
+    padding: 1.1rem 1.5rem;
+    margin: 0 -1.5rem;
+    border-radius: 14px;
+    cursor: pointer;
+    background: var(--white);
+    transform-origin: 1.5rem 50%;
+    transition: transform 0.25s cubic-bezier(.2,.7,.2,1), opacity 0.2s, box-shadow 0.25s;
   }
-
-  .project-card:hover {
-    box-shadow: 0 4px 24px rgba(0,0,0,0.07);
-    transform: translateY(-2px);
-  }
-
-  .project-status {
-    display: inline-block;
-    font-family: var(--mono);
-    font-size: 10px;
-    color: var(--ink-faint);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 1rem;
-    padding: 0.2rem 0.6rem;
-    border-radius: 999px;
-    background: white;
-    border: 1px solid var(--rule);
-  }
-
-  .project-status.active {
-    color: var(--green);
-    background: var(--green-light);
-    border-color: transparent;
-  }
-
-  .project-date {
-    display: inline-block;
-    font-family: var(--mono);
-    font-size: 10px;
-    color: var(--ink-faint);
-    letter-spacing: 0.05em;
-    margin-left: 0.5rem;
-  }
-
-  .project-name {
-    font-family: var(--display);
-    font-size: 1.2rem;
-    font-weight: 400;
-    color: var(--ink);
-    margin-bottom: 0.6rem;
-    margin-top: 1.1rem;
-    line-height: 1.25;
-  }
-
-  .project-name:first-of-type { margin-top: 0; }
-
-  .project-wip {
+  .q-label {
+    grid-column: 1;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
     font-family: var(--mono);
     font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
     color: var(--ink-faint);
-    letter-spacing: 0.04em;
-    vertical-align: middle;
+    margin-bottom: 0.45rem;
+  }
+  .q-text {
+    grid-column: 1;
+    display: block;
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(2rem, 3.4vw, 3rem);
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    max-width: 24ch;
+    color: var(--ink-faint);
+    transition: color 0.2s;
+  }
+  .q-arrow {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    width: 3rem; height: 3rem;
+    border-radius: 999px;
+    border: 1px solid var(--green);
+    display: grid; place-items: center;
+    font-size: 1.25rem;
+    color: var(--green);
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: opacity 0.2s, transform 0.25s, background 0.2s, color 0.2s;
   }
 
-  .project-body {
+  /* hover / keyboard focus: the active question darkens and grows over its neighbours */
+  .q-list:hover .q-btn:not(:hover) { opacity: 0.55; }
+  .q-btn:hover, .q-btn:focus-visible {
+    z-index: 2;
+    transform: scale(1.07);
+    box-shadow: 0 10px 40px var(--lift);
+    outline: none;
+  }
+  .q-btn:hover .q-text, .q-btn:focus-visible .q-text { color: var(--ink); }
+  .q-btn:hover .q-label, .q-btn:focus-visible .q-label { color: var(--green); }
+  .q-btn:hover .q-arrow, .q-btn:focus-visible .q-arrow {
+    opacity: 1; transform: rotate(-45deg); background: var(--green); color: var(--on-accent);
+  }
+
+  .q-status {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    padding: 0.15rem 0.55rem;
+    border-radius: 999px;
+    border: 1px solid var(--rule);
+    background: var(--surface);
+    white-space: nowrap;
+  }
+  .q-status.active { color: var(--green); background: var(--green-light); border-color: transparent; }
+
+  .also-built {
+    display: flex;
+    gap: 1.25rem;
+    align-items: baseline;
+    margin-top: 3rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--rule);
+    max-width: 1240px;
     font-size: 0.95rem;
     color: var(--ink-mid);
-    font-weight: 400;
-    line-height: 1.65;
-    margin-bottom: 0.6rem;
   }
-
-  .project-body p { margin-bottom: 0.4rem; }
-  .project-body p:last-child { margin-bottom: 0; }
+  .also-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    white-space: nowrap;
+  }
+  .also-built a { color: var(--green); text-decoration: none; font-weight: 500; }
+  .also-built a:hover { text-decoration: underline; }
 
   .project-link {
-    font-family: var(--mono);
-    font-size: 13px;
-    color: var(--green);
-    text-decoration: none;
-    letter-spacing: 0.04em;
-    display: inline-block;
-    margin-bottom: 1.1rem;
-    font-weight: 400;
+    font-family: var(--mono); font-size: 13px; color: var(--green); text-decoration: none;
+    letter-spacing: 0.04em; display: inline-block; margin-bottom: 1.1rem; font-weight: 400;
+  }
+  .project-link:hover { text-decoration: underline; }
+  .project-link.muted { color: var(--ink-faint); }
+
+  /* panel (bottom sheet) */
+  .panel-backdrop {
+    position: fixed; inset: 0; z-index: 190;
+    background: var(--backdrop);
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.25s;
+  }
+  .panel-backdrop.open { opacity: 1; pointer-events: auto; }
+
+  .panel {
+    position: fixed; z-index: 200;
+    left: 0; right: 0; bottom: 0;
+    height: 90vh;
+    background: var(--white);
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 -20px 60px var(--lift);
+    padding: 4rem 4rem 3rem;
+    overflow-y: auto;
+    visibility: hidden;
+    transform: translateY(100%);
+    transition: transform 0.35s cubic-bezier(.2,.7,.2,1), visibility 0s linear 0.35s;
+  }
+  .panel.open { visibility: visible; transform: none; transition: transform 0.35s cubic-bezier(.2,.7,.2,1), visibility 0s; }
+  .panel::before {
+    content: ""; position: absolute; top: 0.75rem; left: 50%; transform: translateX(-50%);
+    width: 44px; height: 4px; border-radius: 4px; background: var(--rule);
+  }
+  .panel-close {
+    all: unset;
+    position: absolute; top: 1rem; right: 1.25rem;
+    width: 2.25rem; height: 2.25rem;
+    display: grid; place-items: center;
+    font-size: 1.5rem; line-height: 1;
+    color: var(--ink-mid);
+    border-radius: 999px;
+    cursor: pointer;
+  }
+  .panel-close:hover { background: var(--off); color: var(--ink); }
+  .panel-close:focus-visible { outline: 2px solid var(--green); }
+
+  .proj-detail {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.2fr);
+    gap: 4rem;
+    align-items: start;
+    max-width: 1240px;
+    margin: 0 auto;
+  }
+  .proj-detail[hidden] { display: none; }
+  .panel-kicker { margin-bottom: 1rem; }
+  .panel-title { font-family: var(--display); font-weight: 400; font-size: clamp(3rem, 5vw, 4.5rem); line-height: 1.05; color: var(--ink); }
+  .panel-q { font-family: var(--display); font-style: italic; font-weight: 300; font-size: 1.4rem; color: var(--green); line-height: 1.35; margin: 0.6rem 0 1rem; }
+  .panel-tech { color: var(--ink-mid); font-size: 0.92rem; line-height: 1.6; margin-bottom: 1.25rem; }
+  .skills-label {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--green); margin-right: 0.6rem;
+  }
+  .inline-skills { color: var(--ink-faint); font-size: 0.88em; }
+  .panel-body { color: var(--ink-mid); font-size: 0.97rem; line-height: 1.7; margin-bottom: 1rem; }
+  .panel-body p { margin-bottom: 0.75rem; }
+
+  .panel-fig { margin: 0; }
+  .fig-slot {
+    aspect-ratio: 4 / 3;
+    border: 1px dashed var(--ink-faint);
+    border-radius: 8px;
+    background: var(--off);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 0.4rem;
+    font-family: var(--mono); font-size: 12px; color: var(--ink-faint);
+    text-align: center; padding: 1rem;
+  }
+  .fig-slot img { width: 100%; height: 100%; object-fit: contain; }
+  .fig-slot.has-img { border: none; padding: 0; background: none; border-radius: 0; }
+  .fig-slot.has-img.paper { border-radius: 10px; overflow: hidden; }
+  .fig-hint { font-size: 11px; opacity: 0.8; }
+  .panel-fig figcaption { font-size: 0.85rem; color: var(--ink-mid); margin-top: 0.6rem; line-height: 1.5; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .panel, .panel-backdrop, .q-arrow, .q-btn { transition: none !important; }
+    .q-btn:hover, .q-btn:focus-visible { transform: none; }
   }
 
-  .project-link:hover { text-decoration: underline; }
+  /* DS PROJECTS: two columns (questions | Spirometry interactive) */
+  .ds-layout {
+    display: grid;
+    /* left column fixed; the 2.5rem gap clears the hovered question box (scaled 1.07, shifted 1.5rem) by ~1rem */
+    grid-template-columns: minmax(0, 44rem) minmax(360px, 1fr);
+    gap: 2.5rem;
+    align-items: start;
+    max-width: 1240px;
+  }
+  .ds-main { min-width: 0; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  .spiro {
+    position: relative;
+    background: var(--off);
+    border: 1px solid var(--rule);
+    border-radius: 16px;
+    padding: 1.4rem 1.4rem 1.2rem;
+  }
+  .spiro-kicker {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--green); margin-bottom: 0.35rem;
+  }
+  .spiro-title { font-family: var(--display); font-weight: 400; font-size: 1.35rem; line-height: 1.2; color: var(--ink); margin-bottom: 1rem; }
+
+  .spiro-select-wrap { display: block; position: relative; margin-bottom: 0.6rem; }
+  .spiro-select-wrap::after {
+    content: "▾"; position: absolute; right: 0.9rem; top: 50%; transform: translateY(-50%);
+    color: var(--ink-mid); pointer-events: none; font-size: 0.85rem;
+  }
+  .spiro-select {
+    appearance: none; -webkit-appearance: none;
+    width: 100%;
+    font-family: var(--sans); font-size: 0.95rem; color: var(--ink);
+    background: var(--white);
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    padding: 0.55rem 2.2rem 0.55rem 0.8rem;
+    cursor: pointer;
+  }
+  .spiro-select:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; }
+  .spiro-select option { background: var(--white); color: var(--ink); }
+
+  .spiro-change { font-size: 0.85rem; color: var(--ink-mid); line-height: 1.5; margin-bottom: 0.9rem; min-height: 2.6em; }
+
+  .spiro-effect {
+    all: unset; box-sizing: border-box;
+    display: grid; grid-template-columns: auto 1fr; column-gap: 0.7rem; align-items: baseline;
+    width: 100%;
+    cursor: help;
+    padding: 0.2rem 0;
+  }
+  .spiro-effect:focus-visible { outline: 2px solid var(--green); outline-offset: 4px; border-radius: 6px; }
+  .spiro-effect-num { font-family: var(--display); font-size: 2.4rem; line-height: 1; color: var(--green); grid-row: 1 / span 2; }
+  .spiro-effect-num.null { color: var(--ink-mid); }
+  .spiro-effect-unit { font-size: 0.8rem; color: var(--ink-mid); line-height: 1.3; }
+  .spiro-effect-hint {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.04em; color: var(--ink-faint);
+    text-decoration: underline dotted; text-underline-offset: 3px;
+  }
+  .spiro-effect-wrap { position: relative; }
+  .spiro-effect-text {
+    position: absolute; z-index: 6; left: 0; right: 0; top: calc(100% + 0.5rem);
+    font-size: 0.85rem; line-height: 1.55; color: var(--ink);
+    background: var(--white); border-left: 2px solid var(--green);
+    border-radius: 0 8px 8px 0;
+    box-shadow: 0 10px 30px var(--lift);
+    padding: 0.6rem 0.8rem;
+    margin: 0;
+    opacity: 0; visibility: hidden; transform: translateY(-4px);
+    transition: opacity 0.18s, transform 0.18s, visibility 0s linear 0.18s;
+  }
+  .spiro.show-effect .spiro-effect-text { opacity: 1; visibility: visible; transform: none; transition: opacity 0.18s, transform 0.18s, visibility 0s; }
+
+  .spiro-chart { position: relative; margin-top: 1rem; }
+  .spiro-chart svg { display: block; width: 100%; height: auto; overflow: visible; }
+  .spiro-chart .ax { stroke: var(--ink-faint); stroke-width: 1; }
+  .spiro-chart .grid { stroke: var(--rule); stroke-width: 1; }
+  .spiro-chart .zero { stroke: var(--ink-faint); stroke-width: 1; }
+  .spiro-chart .release { stroke: var(--ink-mid); stroke-width: 1; stroke-dasharray: 3 3; }
+  .spiro-chart .tick { font-family: var(--mono); font-size: 10px; fill: var(--ink-faint); }
+  .spiro-chart .lab { font-family: var(--sans); font-size: 10.5px; fill: var(--ink-mid); }
+  .spiro-chart .band { fill: var(--green); opacity: 0.16; }
+  .spiro-chart .bandline { stroke: var(--green); stroke-width: 1.5; opacity: 0.8; }
+  .spiro-chart .err { stroke-width: 1.6; }
+  .spiro-chart .pt { cursor: pointer; transition: r 0.12s; }
+  .spiro-chart .before .err, .spiro-chart .before .pt { stroke: var(--ink-faint); fill: var(--ink-faint); }
+  .spiro-chart .after .err { stroke: var(--green); }
+  .spiro-chart .after .pt { fill: var(--green); stroke: var(--green); }
+  .spiro-chart .ref .pt { fill: var(--off); stroke: var(--ink-faint); stroke-width: 1.5; }
+  .spiro-chart .hit { fill: transparent; cursor: pointer; }
+  .spiro-chart g.on .pt { stroke: var(--ink); stroke-width: 2; }
+
+  .spiro-tip {
+    position: absolute; z-index: 5;
+    width: 16.5rem;
+    background: var(--white); color: var(--ink);
+    border: 1px solid var(--rule); border-radius: 10px;
+    box-shadow: 0 10px 30px var(--lift);
+    padding: 0.6rem 0.75rem;
+    font-size: 0.78rem; line-height: 1.5;
+    pointer-events: none;
+  }
+  .spiro-tip b { font-weight: 600; }
+  .spiro-tip .tip-head { font-family: var(--mono); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--green); margin-bottom: 0.25rem; }
+  .spiro-tip .tip-head.old { color: var(--ink-faint); }
+  .spiro-tip table { border-collapse: collapse; width: 100%; }
+  .spiro-tip td { padding: 0.05rem 0; color: var(--ink-mid); }
+  .spiro-tip td + td { text-align: right; color: var(--ink); font-variant-numeric: tabular-nums; padding-left: 0.75rem; white-space: nowrap; }
+
+  .spiro-legend { display: flex; flex-wrap: wrap; gap: 0.4rem 1rem; font-size: 0.75rem; color: var(--ink-mid); margin: 0.5rem 0 0.9rem; }
+  .spiro-legend span { display: inline-flex; align-items: center; gap: 0.4rem; }
+  .lg { display: inline-block; width: 9px; height: 9px; border-radius: 50%; }
+  .lg-before { background: var(--ink-faint); border-radius: 2px; }
+  .lg-after { background: var(--green); }
+  .lg-band { width: 16px; height: 8px; border-radius: 2px; background: var(--green); opacity: 0.35; }
+
+  .spiro-caption { font-size: 0.78rem; line-height: 1.55; color: var(--ink-mid); margin-bottom: 0.5rem; }
+  .spiro-summary { font-size: 0.78rem; line-height: 1.55; color: var(--ink-faint); margin-bottom: 0.6rem; }
+  .spiro-summary:empty { display: none; }
+  .spiro-open {
+    all: unset; cursor: pointer;
+    font-family: var(--mono); font-size: 12px; color: var(--green); letter-spacing: 0.04em;
+  }
+  .spiro-open:hover { text-decoration: underline; }
+  .spiro-open:focus-visible { outline: 2px solid var(--green); outline-offset: 3px; }
+
+  @media (max-width: 1240px) {
+    .ds-layout { grid-template-columns: minmax(0, 1fr); gap: 2.5rem; }
+    .spiro { max-width: 560px; }
+  }
+
+  /* figure caption link */
+  .cap-link { color: var(--green); text-decoration: none; white-space: nowrap; }
+  .cap-link:hover { text-decoration: underline; }
+  .fig-slot.has-img { cursor: zoom-in; }
+
+  /* FIGURE VIEWER */
+  .zoom {
+    position: fixed; inset: 0; z-index: 300;
+    display: flex; flex-direction: column;
+    background: rgba(8, 18, 32, 0.92);
+  }
+  .zoom[hidden] { display: none; }
+  .zoom-bar {
+    display: flex; align-items: center; justify-content: flex-end; gap: 0.75rem;
+    padding: 0.75rem 1rem;
+  }
+  .zoom-hint { margin-right: auto; font-family: var(--mono); font-size: 11px; color: var(--ink-faint); letter-spacing: 0.04em; }
+  .zoom-btn {
+    all: unset; cursor: pointer;
+    font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em; color: var(--ink);
+    padding: 0.35rem 0.8rem; border: 1px solid var(--rule); border-radius: 999px;
+  }
+  .zoom-btn:hover { border-color: var(--green); color: var(--green); }
+  .zoom-btn:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; }
+  .zoom-close { font-size: 1.3rem; line-height: 1; padding: 0.2rem 0.65rem; }
+  .zoom-stage {
+    flex: 1; min-height: 0; overflow: auto;
+    display: flex; padding: 0 1rem 1rem;
+  }
+  .zoom-stage img {
+    margin: auto;                       /* centers when it fits, scrolls from the edge when it doesn't */
+    max-width: 100%; max-height: 100%;
+    object-fit: contain; border-radius: 8px;
+    cursor: zoom-in;
+  }
+  .zoom.full .zoom-stage img { max-width: none; max-height: none; cursor: zoom-out; }
 
   /* CONTACT */
   .contact-row {
@@ -552,13 +793,23 @@
     .section-header { margin-bottom: 1.5rem; }
 
     .about-grid { grid-template-columns: 1fr; gap: 1.5rem; }
-    .about-bio, .about-photo-wrap, .about-stats { grid-column: 1; grid-row: auto; }
+    .about-bio, .about-photo-wrap { grid-column: 1; grid-row: auto; }
     .about-photo-wrap { order: -1; }
-    .about-stats { grid-template-columns: 1fr 1fr; }
-    .stat-num { font-size: 2rem; }
 
-    .projects-grid { grid-template-columns: 1fr; }
-    .project-card { padding: 1.4rem; }
+    #nav-projects .ds { display: none; }
+    .page-intro { font-size: 1rem; margin-bottom: 1.75rem; }
+    .project-link.intro-link { margin: -0.75rem 0 1.75rem; }
+    .q-btn { margin: 0; padding: 1rem 0; grid-template-columns: 1fr; }
+    .q-text { font-size: 1.75rem; color: var(--ink); }
+    .q-arrow { display: none; }
+    .q-list:hover .q-btn:not(:hover) { opacity: 1; }
+    .q-btn:hover, .q-btn:focus-visible { transform: none; box-shadow: none; }
+    .also-built { flex-direction: column; gap: 0.25rem; }
+    .panel { height: 100%; border-radius: 0; padding: 3.5rem 1.25rem 2rem; }
+    .panel::before { display: none; }
+    .proj-detail { grid-template-columns: 1fr; gap: 2rem; }
+    .panel-title { font-size: 2.6rem; }
+    .spiro { padding: 1.1rem; border-radius: 12px; }
 
     .page-footer { padding: 1.5rem 1.25rem; flex-direction: column; gap: 0.25rem; align-items: flex-start; }
   }
@@ -567,10 +818,11 @@
 <body>
 
 <nav>
-  <span class="nav-name" onclick="showPage('home')">phillip j. macias</span>
+  <span class="nav-name" onclick="showPage('home')">phillip macias</span>
   <ul class="nav-links">
     <li><a href="#" onclick="return showPage('about')" id="nav-about">About</a></li>
-    <li><a href="#" onclick="return showPage('projects')" id="nav-projects">Projects</a></li>
+    <li><a href="#" onclick="return showPage('projects')" id="nav-projects"><span class="ds">DS </span>Projects</a></li>
+    <li><a href="#" onclick="return showPage('research')" id="nav-research">Research</a></li>
     <li><a href="#" onclick="return showPage('contact')" id="nav-contact">Resume<span class="full"> &amp; Contact</span></a></li>
   </ul>
 </nav>
@@ -587,7 +839,6 @@
     <div class="hero-pills">
       <span class="hero-pill">Mountain View, CA</span>
       <span class="hero-pill">PhD · Astronomy &amp; Astrophysics</span>
-      <span class="hero-pill">37.3861° N · 122.0839° W</span>
     </div>
     <div class="hero-cta">
       <button class="btn-primary" onclick="showPage('about')">Learn more</button>
@@ -622,6 +873,7 @@
               <span class="skill-tag">Bayesian hierarchical models</span>
               <span class="skill-tag">PyMC / MCMC</span>
               <span class="skill-tag">uncertainty quantification</span>
+              <span class="skill-tag">causal inference</span>
             </div>
           </div>
           <div class="skills-group">
@@ -635,10 +887,19 @@
             </div>
           </div>
           <div class="skills-group">
+            <p class="skills-group-label">AI-Assisted Development</p>
+            <div class="skills-row">
+              <span class="skill-tag">Claude Code</span>
+              <span class="skill-tag">agentic workflows</span>
+              <span class="skill-tag">Claude API</span>
+            </div>
+          </div>
+          <div class="skills-group">
             <p class="skills-group-label">Data &amp; Computing</p>
             <div class="skills-row">
               <span class="skill-tag">Python</span>
               <span class="skill-tag">SQL / DuckDB</span>
+              <span class="skill-tag">data aggregation &amp; cleaning</span>
               <span class="skill-tag">NumPy / SciPy / pandas</span>
               <span class="skill-tag">Git</span>
               <span class="skill-tag">HPC / Slurm</span>
@@ -650,95 +911,229 @@
       <div class="about-photo-wrap">
         <img src="phil_website_pic_cropped.jpg" alt="Phillip Macias" class="about-photo">
       </div>
-      <div class="about-stats">
-        <div class="stat-block">
-          <div class="stat-num">PhD</div>
-          <div class="stat-label">Astronomy &amp; Astrophysics, UC Santa Cruz</div>
-        </div>
-        <div class="stat-block">
-          <div class="stat-num">15</div>
-          <div class="stat-label">Years of research</div>
-        </div>
-        <div class="stat-block">
-          <div class="stat-num">21</div>
-          <div class="stat-label">Publications</div>
-        </div>
-        <div class="stat-block">
-          <div class="stat-num">731</div>
-          <div class="stat-label">Journal citations</div>
-        </div>
-      </div>
     </div>
   </div>
   <div class="page-footer">
-    <span class="footer-text">phillip j. macias · mountain view, ca</span>
+    <span class="footer-text">phillip macias · mountain view, ca</span>
     <span class="footer-text">data scientist</span>
   </div>
 </div>
 
-<!-- PROJECTS -->
+<!-- DS PROJECTS -->
 <div class="page" id="page-projects">
   <div class="page-inner">
     <div class="section-header">
       <span class="section-tag">02</span>
-      <h2 class="section-title">Projects</h2>
+      <h2 class="section-title">DS Projects</h2>
     </div>
-    <div class="projects-grid">
+    <div class="ds-layout">
+      <div class="ds-main">
+      <p class="page-intro">Here are a few projects that I scoped and carried out on my own (with the help of Claude Code) to practice modern statistical methods on real, (occasionally) messy public data.</p>
 
-      <article class="project-card">
-        <p class="project-status active">active<span class="project-date">2026</span></p>
-        <h3 class="project-name">Clickworthy <span class="project-wip">(in progress)</span></h3>
-        <div class="project-body">
-          <p>Clickworthy re-analyzes 3,823 real headline A/B tests from the Upworthy Research Archive to ask how much a typical test could actually tell you. Classical checks show the median test could only detect a lift of about 83%, and a simulation shows that peeking at live results raises the false-positive rate from 5% to 25%. A hierarchical Bayesian model in PyMC then pools evidence across all tests, pulling noisy "winners" back toward realistic effect sizes. Causal inference is next.</p>
+      <ol class="q-list">
+        <li><button class="q-btn" data-project="flashpoint">
+          <span class="q-label">Flashpoint <span class="q-status">2026</span></span>
+          <span class="q-text">Can the first two days of a wildfire tell you whether it will escalate?</span>
+          <span class="q-arrow" aria-hidden="true">→</span>
+        </button></li>
+        <li><button class="q-btn" data-project="spirometry">
+          <span class="q-label">Spirometry <span class="q-status active">in progress</span></span>
+          <span class="q-text">How much do buffs and nerfs affect card pick rates in a deckbuilder?</span>
+          <span class="q-arrow" aria-hidden="true">→</span>
+        </button></li>
+        <li><button class="q-btn" data-project="clickworthy">
+          <span class="q-label">Clickworthy <span class="q-status active">in progress</span></span>
+          <span class="q-text">How much can a typical headline A/B test actually tell you?</span>
+          <span class="q-arrow" aria-hidden="true">→</span>
+        </button></li>
+      </ol>
+
+      </div>
+      <!-- SPIROMETRY INTERACTIVE: data in figures/spirometry_cards.js (from spirometry notebook 06) -->
+      <aside class="spiro" id="spiro" aria-label="Interactive: how a balance patch moved a card's pick rate">
+        <p class="spiro-kicker">Spirometry · interactive</p>
+        <h3 class="spiro-title">How a balance patch moved a card's pick rate</h3>
+        <label class="spiro-select-wrap">
+          <span class="sr-only">Card</span>
+          <select class="spiro-select" id="spiro-select"></select>
+        </label>
+        <p class="spiro-change" id="spiro-change"></p>
+        <div class="spiro-effect-wrap">
+        <button type="button" class="spiro-effect" id="spiro-effect" aria-describedby="spiro-effect-text">
+          <span class="spiro-effect-num" id="spiro-effect-num"></span>
+          <span class="spiro-effect-unit">percentage points, weeks 0–3</span>
+          <span class="spiro-effect-hint" aria-hidden="true">what does this mean?</span>
+        </button>
+        <p class="spiro-effect-text" id="spiro-effect-text" role="status"></p>
         </div>
-        <a class="project-link" href="https://github.com/pmacias/clickworthy" target="_blank">view on github →</a>
-
-        <h3 class="project-name">Flashpoint</h3>
-        <div class="project-body">
-          <p>Flashpoint predicts whether an active wildfire will escalate or stay contained, using only the first one to two days of fire and weather data. It combines weather, topography, and vegetation features in an Explainable Boosting Machine, reaching 0.75 macro-F1 on the binary escalation task against 0.42 for a majority-class baseline, and catching 95% of fires that went on to escalate. XGBoost with GFS forecast features edges it on macro-F1, but the EBM is kept as primary for its higher escalation recall.</p>
+        <div class="spiro-chart" id="spiro-chart">
+          <svg id="spiro-svg" role="img" aria-labelledby="spiro-svg-desc"><desc id="spiro-svg-desc"></desc></svg>
+          <div class="spiro-tip" id="spiro-tip" hidden></div>
         </div>
-        <a class="project-link" href="https://github.com/pmacias/flashpoint" target="_blank">view on github →</a>
-
-        <h3 class="project-name">Pivot Quiz</h3>
-        <div class="project-body">
-          <p>Coming from academia, I needed a way to quickly understand the current tech landscape as it is constantly evolving. Realizing there was no readily available tool beyond multiple choice quizzes and paywalls, I built Pivot, which uses Claude through API calls and uses scaffolding to build signal (work style, skills, collaboration level) and suggest roles in tech and help identify and mitigate skill gaps.</p>
-        </div>
-        <a class="project-link" href="https://pmacias.github.io/pivot/" target="_blank">pivot app →</a>
-      </article>
-
-      <article class="project-card">
-        <p class="project-status">postdoctoral</p>
-        <h3 class="project-name">NASA Roman Space Telescope</h3>
-        <div class="project-body">
-          <p>I helped design the High Latitude Time Domain Survey (HLTDS) for NASA's Nancy Grace Roman Space Telescope, a flagship mission that launched in August 2026. The survey design our team recommended beat NASA's dark-energy requirement and became the basis for the survey's observing strategy.</p>
-          <p>As a postdoc at UC Santa Cruz and a member of a Science Investigation Team, I ran and analyzed about 500 simulated survey campaigns, comparing candidate designs (depth, cadence, filters) on a single figure-of-merit. The survey itself is scheduled to begin in late 2028. Learn more about it at the link below.</p>
-        </div>
-        <a class="project-link" href="https://science.nasa.gov/mission/roman-space-telescope/high-latitude-time-domain-survey/" target="_blank">roman high latitude time domain survey →</a>
-      </article>
-
-      <article class="project-card">
-        <p class="project-status">doctoral</p>
-        <h3 class="project-name">Previous Research</h3>
-        <div class="project-body">
-          <p>My PhD work consisted of two tenuously-related topics: the hydrodynamics of interacting stars, and the origin of the heaviest elements in the Universe. The former involved running large-scale hydro simulations on supercomputers, and the latter entailed building a physics-based analytical model to reanalyze existing astronomical data.</p>
-          <p>My favorite part of research is collaboration, and I am co-author on 20+ peer-reviewed publications across astrophysics and computational modeling. Papers linked below for the morbidly curious!</p>
-        </div>
-        <a class="project-link" href="https://ui.adsabs.harvard.edu/public-libraries/mqNyNo_wS9a6PJsHrkLD1Q" target="_blank">full publication list via NASA ADS →</a>
-      </article>
-
+        <p class="spiro-legend">
+          <span><i class="lg lg-before"></i>old build</span>
+          <span><i class="lg lg-after"></i>new build</span>
+          <span><i class="lg lg-band"></i>weeks 0–3 average</span>
+        </p>
+        <p class="spiro-caption">Difference-in-differences estimates of how players' card picks in the deckbuilding game <i>Slay the Spire 2</i> changed after balance patches, relative to comparable unchanged cards. Selected examples; hover or tap a point for its numbers.</p>
+        <p class="spiro-summary" id="spiro-summary"></p>
+        <button type="button" class="spiro-open" data-project="spirometry">about the project →</button>
+      </aside>
     </div>
+
+    <p class="also-built">
+      <span class="also-label">Also built</span>
+      <span><a href="https://pmacias.github.io/pivot/" target="_blank">Pivot</a>, a career-mapping tool built on the Claude API that suggests roles in tech and flags skill gaps, made while figuring out my own move out of academia. <span class="inline-skills">Skills: Claude API, prompt design, a Cloudflare Worker proxy that keeps the API key server-side, pins the model, and validates requests.</span></span>
+    </p>
   </div>
   <div class="page-footer">
-    <span class="footer-text">phillip j. macias · mountain view, ca</span>
+    <span class="footer-text">phillip macias · mountain view, ca</span>
     <span class="footer-text">data scientist</span>
   </div>
 </div>
+
+<!-- RESEARCH -->
+<div class="page" id="page-research">
+  <div class="page-inner">
+    <div class="section-header">
+      <span class="section-tag">03</span>
+      <h2 class="section-title">Previous Research</h2>
+    </div>
+    <p class="page-intro">My favorite part of research is collaboration, and I am co-author on 20+ peer-reviewed publications (700+ refereed citations) across astrophysics and computational modeling. Two of the questions I worked on are below; the full list is on NASA ADS for the morbidly curious.</p>
+    <a class="project-link intro-link" href="https://ui.adsabs.harvard.edu/public-libraries/mqNyNo_wS9a6PJsHrkLD1Q" target="_blank">full publication list via NASA ADS →</a>
+
+    <ol class="q-list">
+      <li><button class="q-btn" data-project="roman">
+        <span class="q-label">NASA Roman Space Telescope <span class="q-status">postdoc</span></span>
+        <span class="q-text">How do you design a survey for a telescope that doesn't exist yet?</span>
+        <span class="q-arrow" aria-hidden="true">→</span>
+      </button></li>
+      <li><button class="q-btn" data-project="gold">
+        <span class="q-label">Heavy-element origins <span class="q-status">PhD</span></span>
+        <span class="q-text">Where in the universe is gold made?</span>
+        <span class="q-arrow" aria-hidden="true">→</span>
+      </button></li>
+    </ol>
+  </div>
+  <div class="page-footer">
+    <span class="footer-text">phillip macias · mountain view, ca</span>
+    <span class="footer-text">data scientist</span>
+  </div>
+</div>
+
+<!-- FIGURE VIEWER: opens on top of the project panel when a figure is clicked -->
+<div class="zoom" id="zoom" role="dialog" aria-modal="true" aria-label="Enlarged figure" hidden>
+  <div class="zoom-bar">
+    <span class="zoom-hint" id="zoom-hint">click the figure to zoom to full size</span>
+    <a class="zoom-btn" id="zoom-download" href="#" download>download</a>
+    <button type="button" class="zoom-btn zoom-close" id="zoom-close" aria-label="Close">×</button>
+  </div>
+  <div class="zoom-stage" id="zoom-stage"><img id="zoom-img" alt=""></div>
+</div>
+
+<!-- PROJECT PANEL: one <article> per project; the matching one is shown when a question is clicked.
+     To add a figure: replace the contents of .fig-slot with <img src="figures/NAME.png" alt="..."> -->
+<div class="panel-backdrop" id="panel-backdrop"></div>
+<aside class="panel" id="panel" role="dialog" aria-modal="true" aria-label="Project details" aria-hidden="true">
+  <button class="panel-close" id="panel-close" aria-label="Close">×</button>
+
+  <article class="proj-detail" id="detail-flashpoint" data-page="projects" hidden>
+    <div class="panel-text">
+      <p class="panel-kicker"><span class="q-status">2026</span></p>
+      <h2 class="panel-title">Flashpoint</h2>
+      <p class="panel-q">Can the first two days of a wildfire tell you whether it will escalate?</p>
+      <p class="panel-tech"><span class="skills-label">Skills</span>Gradient boosting (XGBoost) · Explainable Boosting Machines · convolutional neural networks with Grad-CAM · leave-one-year-out cross-validation · feature ablation · large raster data pipelines (HDF5, DuckDB)</p>
+      <div class="panel-body">
+        <p>Flashpoint predicts whether an active wildfire will escalate or stay contained, using only the first one to two days of fire and weather data. It combines weather, topography, and vegetation features in an Explainable Boosting Machine, reaching 0.75 macro-F1 on the binary escalation task against 0.42 for a majority-class baseline, and catching 95% of fires that went on to escalate.</p>
+        <p>XGBoost with GFS forecast features edges it on macro-F1, but the EBM is kept as primary for its higher escalation recall.</p>
+      </div>
+      <a class="project-link" href="https://github.com/pmacias/flashpoint" target="_blank">view on github →</a>
+    </div>
+    <figure class="panel-fig">
+      <a class="fig-slot has-img" href="figures/flashpoint_growth.png" data-zoom title="Click to enlarge"><img src="figures/flashpoint_growth.png" alt="Two wildfires shown side by side. Over their first two days both burned a similar area. The fire that escalated was in much drier fuel (ERC 83 vs. 51) and went on to grow far larger; the other stayed small." loading="lazy"></a>
+      <figcaption>Two illustrative fires that looked alike over their first two days of satellite detections; the one that escalated was burning in much drier fuel (ERC 83 vs. 51), a feature the model weights heavily overall. The model sees only the box-average value, not the map, and the pair was chosen by rules fixed in advance.</figcaption>
+    </figure>
+  </article>
+
+  <article class="proj-detail" id="detail-clickworthy" data-page="projects" hidden>
+    <div class="panel-text">
+      <p class="panel-kicker"><span class="q-status active">in progress</span></p>
+      <h2 class="panel-title">Clickworthy</h2>
+      <p class="panel-q">How much can a typical headline A/B test actually tell you?</p>
+      <p class="panel-tech"><span class="skills-label">Skills</span>A/B testing · statistical power and minimum detectable effect · multiple-testing correction (FDR) · simulation of peeking at live tests · Bayesian hierarchical modeling (PyMC, MCMC)</p>
+      <div class="panel-body">
+        <p>Clickworthy re-analyzes 3,823 real headline A/B tests from the Upworthy Research Archive to ask how much a typical test could actually tell you. Classical checks show the median test could only detect a lift of about 83%, and a simulation shows that peeking at live results raises the false-positive rate from 5% to 25%.</p>
+        <p>A Bayesian hierarchical model in PyMC then pools evidence across all tests, pulling noisy "winners" back toward realistic effect sizes: among the 382 tests a naive read would call significant, the median winning lift drops from +64% to +45%. Causal inference is next.</p>
+      </div>
+      <a class="project-link" href="https://github.com/pmacias/clickworthy" target="_blank">view on github →</a>
+    </div>
+    <figure class="panel-fig">
+      <a class="fig-slot has-img" href="figures/clickworthy_winners.png" data-zoom title="Click to enlarge"><img src="figures/clickworthy_winners.png" alt="Left: one A/B test where the winning headline's lift drops from +126% on raw click-through rates to +95% after hierarchical pooling. Right: for all 382 tests with a declared winner, the pooled lift is smaller than the naive lift, with the median falling from +64% to +45%." loading="lazy"></a>
+      <figcaption>Across 382 Upworthy A/B tests with a 'winner' at p &lt; 0.05, a hierarchical model that pools evidence across all 3,823 tests shrinks the winning lift by about a quarter at the median (+64% → +45%).</figcaption>
+    </figure>
+  </article>
+
+  <article class="proj-detail" id="detail-spirometry" data-page="projects" hidden>
+    <div class="panel-text">
+      <p class="panel-kicker"><span class="q-status active">in progress</span></p>
+      <h2 class="panel-title">Spirometry</h2>
+      <p class="panel-q">How much do buffs and nerfs affect card pick rates in a deckbuilder?</p>
+      <p class="panel-tech"><span class="skills-label">Skills</span>Causal inference · natural experiments · difference-in-differences · event studies with pre-trend checks · robustness and placebo checks · aggregating and cleaning ~1.2 million community-uploaded runs (DuckDB)</p>
+      <div class="panel-body">
+        <p><i>Slay the Spire 2</i> is a deckbuilder: a game where you build a deck of cards as you play, choosing one new card from a small set offered after most fights. During its early-access period, the developers shipped balance patches that buffed (strengthened), nerfed (weakened), or reworked individual cards. Each change is a small natural experiment.</p>
+        <p>Spirometry lines those patches up with about 1.2 million community-uploaded runs from <a class="cap-link" href="https://spire-codex.com" target="_blank" rel="noopener">Spire Codex</a> and estimates how each change moved a card's pick rate. It uses a difference-in-differences design: the changed card against the same character's unchanged cards, which absorb everything else that shifted between game builds.</p>
+        <p>Of the first patch's 26 numeric tweaks, 21 clearly moved pick rates within four weeks (median 4.4 percentage points). The second patch's 17 tweaks moved them less than half as much (median 1.9; 8 clearly). Win rates are next.</p>
+      </div>
+      <p class="project-link muted">repo coming soon</p>
+    </div>
+    <figure class="panel-fig">
+      <a class="fig-slot has-img" href="figures/spirometry_parry.png" data-zoom title="Click to enlarge"><img src="figures/spirometry_parry.png" alt="Week-by-week change in Parry's pick rate relative to unchanged cards. Before the patch the gap is flat near zero; after the patch raised Parry's Block from 6 to 10, it jumps to about 14 percentage points and stays there." loading="lazy"></a>
+      <figcaption>After a patch raised Parry's Block from 6 to 10, players picked it 14 percentage points more often (13% → 27% of offers) than comparable unchanged cards over the first four weeks, with no clear drift before the patch.</figcaption>
+    </figure>
+  </article>
+
+  <article class="proj-detail" id="detail-roman" data-page="research" hidden>
+    <div class="panel-text">
+      <p class="panel-kicker"><span class="q-status">postdoc · 2020–2026</span></p>
+      <h2 class="panel-title">NASA Roman Space Telescope</h2>
+      <p class="panel-q">How do you design a survey for a telescope that doesn't exist yet?</p>
+      <p class="panel-tech"><span class="skills-label">Skills</span>Large-scale simulation (~500 end-to-end survey campaigns) · experimental design under a fixed budget · figure-of-merit comparison · HPC / Slurm</p>
+      <div class="panel-body">
+        <p>I helped design the High Latitude Time Domain Survey (HLTDS) for NASA's Nancy Grace Roman Space Telescope, a flagship mission that launched in August 2026. The survey design our team recommended beat NASA's dark-energy requirement and became the basis for the survey's observing strategy.</p>
+        <p>As a postdoc at UC Santa Cruz and a member of one of NASA's Roman Science Investigation Teams, I ran and analyzed about 500 simulated survey campaigns, comparing candidate designs (depth, cadence, filters) on a single figure-of-merit. The survey itself is scheduled to begin in late 2028.</p>
+      </div>
+      <a class="project-link" href="https://science.nasa.gov/mission/roman-space-telescope/high-latitude-time-domain-survey/" target="_blank">roman high latitude time domain survey →</a>
+    </div>
+    <figure class="panel-fig">
+      <a class="fig-slot has-img paper" href="figures/roman_fom.png" data-zoom title="Click to enlarge"><img src="figures/roman_fom.png" alt="Line plot of projected dark energy figure of merit against the number of low-redshift Type Ia supernovae. The figure of merit rises steeply from about 295 with the Pantheon low-z sample, past the NASA requirement of 325.5, to about 445 with a 2,000-supernova spectroscopic sample and about 475 with the full sample." loading="lazy"></a>
+      <figcaption>Projected Dark Energy Figure of Merit as a function of number of low-redshift (nearby) Type Ia Supernovae for the Roman High Latitude Time Domain Survey.</figcaption>
+    </figure>
+  </article>
+
+  <article class="proj-detail" id="detail-gold" data-page="research" hidden>
+    <div class="panel-text">
+      <p class="panel-kicker"><span class="q-status">PhD · 2012–2019</span></p>
+      <h2 class="panel-title">Heavy-element origins</h2>
+      <p class="panel-q">Where in the universe is gold made?</p>
+      <p class="panel-tech"><span class="skills-label">Skills</span>Physics-based analytical modeling · reanalysis of published observational data</p>
+      <div class="panel-body">
+        <p>Gold and the other heaviest elements are made by rapid neutron capture, but where in the universe that happens is still debated. I built a physics-based analytical model and used it to reanalyze existing measurements of heavy elements in old stars.</p>
+        <p>The reanalysis ruled out two leading candidate sources, including collapsars, and became two first-author papers.</p>
+      </div>
+      <a class="project-link" href="https://ui.adsabs.harvard.edu/public-libraries/mqNyNo_wS9a6PJsHrkLD1Q" target="_blank">publications via NASA ADS →</a>
+    </div>
+    <figure class="panel-fig">
+      <a class="fig-slot has-img paper" href="figures/gold_eu.png" data-zoom title="Click to enlarge"><img src="figures/gold_eu.png" alt="Scatter plot of europium-to-iron ratio against iron metallicity. Observed old Milky Way stars (black dots) cluster between about −0.5 and 2; collapsar model predictions (red points and a dashed red line) sit well above them, around 2.5 to 3.6." loading="lazy"></a>
+      <figcaption>Surface stellar abundances of r-process elements (Europium) as a function of Iron (Fe) metallicity. Old Milky Way stars are shown in black, and collapsar predictions are shown in red. The y-axis is logarithmic, meaning observed stars are below model predictions by up to a factor of 1000. <a class="cap-link" href="https://aasnova.org/2019/06/28/testing-collapsars-as-the-key-to-heavy-elements/" target="_blank" rel="noopener">Featured in AAS Nova →</a></figcaption>
+    </figure>
+  </article>
+</aside>
 
 <!-- CONTACT -->
 <div class="page" id="page-contact">
   <div class="page-inner">
     <div class="section-header">
-      <span class="section-tag">03</span>
+      <span class="section-tag">04</span>
       <h2 class="section-title">Resume &amp; Contact</h2>
     </div>
     <div class="contact-row">
@@ -761,13 +1156,14 @@
     </div>
   </div>
   <div class="page-footer">
-    <span class="footer-text">phillip j. macias · mountain view, ca</span>
+    <span class="footer-text">phillip macias · mountain view, ca</span>
     <span class="footer-text">data scientist</span>
   </div>
 </div>
 
+<script src="figures/spirometry_cards.js"></script>
 <script>
-  const ROUTES = ['home', 'about', 'projects', 'contact'];
+  const ROUTES = ['home', 'about', 'projects', 'research', 'contact'];
 
   function safePushState(state, path) {
     try {
@@ -799,8 +1195,8 @@
   }
 
   window.addEventListener('popstate', (e) => {
-    const name = (e.state && e.state.page) || pathToPage(location.pathname);
-    showPage(name, false);
+    // hash-only entries (opening/closing a project panel) carry no state; leave the page alone
+    if (e.state && e.state.page) showPage(e.state.page, false);
   });
 
   // On load: honor a path saved by 404.html (see that file for why),
@@ -808,10 +1204,300 @@
   (function initRoute() {
     const redirect = sessionStorage.redirect;
     delete sessionStorage.redirect;
-    const initialPath = redirect || location.pathname;
+    // 404.html saves path + hash, e.g. "/projects#clickworthy"
+    const [initialPath, savedHash] = (redirect || location.pathname).split('#');
+    const hash = savedHash ? '#' + savedHash : location.hash;
     const name = pathToPage(initialPath);
-    safePushState({ page: name }, name === 'home' ? '/' : '/' + name);
+    safePushState({ page: name }, (name === 'home' ? '/' : '/' + name) + hash);
     showPage(name, false);
+  })();
+
+  // ---- Project panel ----
+  // Each question button opens the matching <article id="detail-NAME"> via the URL hash (#NAME),
+  // so a panel can be linked to directly and the back button closes it.
+  const panel = document.getElementById('panel');
+  const backdrop = document.getElementById('panel-backdrop');
+  let lastTrigger = null;
+  let openedByClick = false;
+
+  function detailFor(id) {
+    return id ? document.getElementById('detail-' + id) : null;
+  }
+
+  function renderPanel() {
+    const id = location.hash.slice(1);
+    const detail = detailFor(id);
+    const isOpen = !!detail;
+    if (isOpen) {
+      const page = detail.dataset.page;
+      if (!document.getElementById('page-' + page).classList.contains('active')) showPage(page, false);
+    }
+    document.querySelectorAll('.proj-detail').forEach(d => { d.hidden = d !== detail; });
+    panel.classList.toggle('open', isOpen);
+    backdrop.classList.toggle('open', isOpen);
+    panel.setAttribute('aria-hidden', String(!isOpen));
+    if (isOpen) {
+      panel.scrollTop = 0;
+      document.getElementById('panel-close').focus({ preventScroll: true });
+    } else {
+      openedByClick = false;
+      if (lastTrigger) { lastTrigger.focus({ preventScroll: true }); lastTrigger = null; }
+    }
+  }
+
+  function closePanel() {
+    if (!detailFor(location.hash.slice(1))) return;
+    if (openedByClick) { history.back(); return; }   // pops the #project entry
+    try { history.replaceState(history.state, '', location.pathname + location.search); } catch (e) {}
+    renderPanel();
+  }
+
+  document.querySelectorAll('.q-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      lastTrigger = btn;
+      openedByClick = true;
+      location.hash = btn.dataset.project;
+    });
+  });
+  document.getElementById('panel-close').addEventListener('click', closePanel);
+  backdrop.addEventListener('click', closePanel);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closePanel(); });
+
+  // ---- Figure viewer: click a figure to enlarge it in the page; click again for full size ----
+  (function figureViewer() {
+    const zoom = document.getElementById('zoom');
+    const img = document.getElementById('zoom-img');
+    const dl = document.getElementById('zoom-download');
+    const hint = document.getElementById('zoom-hint');
+    let opener = null;
+
+    function open(link) {
+      const src = link.getAttribute('href');
+      const thumb = link.querySelector('img');
+      img.src = src;
+      img.alt = thumb ? thumb.alt : '';
+      dl.href = src;
+      dl.setAttribute('download', src.split('/').pop());
+      zoom.classList.remove('full');
+      hint.textContent = 'click the figure to zoom to full size';
+      zoom.hidden = false;
+      opener = link;
+      document.getElementById('zoom-close').focus({ preventScroll: true });
+    }
+    function close() {
+      zoom.hidden = true;
+      img.removeAttribute('src');
+      if (opener) { opener.focus({ preventScroll: true }); opener = null; }
+    }
+
+    document.querySelectorAll('[data-zoom]').forEach(link => {
+      link.addEventListener('click', e => { e.preventDefault(); open(link); });
+    });
+    img.addEventListener('click', e => {
+      e.stopPropagation();
+      const full = zoom.classList.toggle('full');
+      hint.textContent = full ? 'click again to fit the screen' : 'click the figure to zoom to full size';
+    });
+    document.getElementById('zoom-close').addEventListener('click', close);
+    document.getElementById('zoom-stage').addEventListener('click', e => { if (e.target.id === 'zoom-stage') close(); });
+    // Escape closes the viewer first (capture phase, so the project panel underneath stays open)
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && !zoom.hidden) { e.stopImmediatePropagation(); close(); }
+    }, true);
+  })();
+  window.addEventListener('hashchange', renderPanel);
+  renderPanel();
+
+  // ---- Spirometry interactive (data: window.SPIROMETRY_CARDS, from figures/spirometry_cards.js) ----
+  (function spirometryWidget() {
+    const DATA = window.SPIROMETRY_CARDS;
+    const root = document.getElementById('spiro');
+    if (!root) return;
+    if (!DATA || !DATA.cards || !DATA.cards.length) { root.hidden = true; return; }
+
+    const NS = 'http://www.w3.org/2000/svg';
+    const svg = document.getElementById('spiro-svg');
+    const tip = document.getElementById('spiro-tip');
+    const chartBox = document.getElementById('spiro-chart');
+    const sel = document.getElementById('spiro-select');
+    const effectBtn = document.getElementById('spiro-effect');
+    const W = 380, H = 250, M = { l: 38, r: 8, t: 12, b: 34 };
+    const X0 = -6, X1 = 8;
+    let pinned = null;          // point group pinned by tap/click
+    let effectPinned = false;
+
+    const minus = s => String(s).replace('-', '−');
+    const pp = (v, d = 1) => (v > 0 ? '+' : '') + minus(v.toFixed(d));
+    const pct = v => minus((100 * v).toFixed(1)) + '%';
+    const int = v => v.toLocaleString('en-US');
+    const weekLabel = w => w <= X0 ? `≤${minus(X0)}` : w >= X1 ? `${X1}+` : minus(w);
+
+    function el(tag, attrs = {}, parent = svg) {
+      const n = document.createElementNS(NS, tag);
+      for (const [k, v] of Object.entries(attrs)) n.setAttribute(k, v);
+      parent.appendChild(n);
+      return n;
+    }
+
+    // dropdown
+    DATA.cards.forEach((c, i) => {
+      const o = document.createElement('option');
+      o.value = i;
+      o.textContent = `${c.name} · ${c.kind}${c.note ? ', no clear effect' : ''}`;
+      sel.appendChild(o);
+    });
+
+    function effectSentence(c) {
+      const h = c.headline;
+      const tb = pct(h.treated_rate_before), ta = pct(h.treated_rate_after);
+      const cb = pct(h.control_rate_before), ca = pct(h.control_rate_after);
+      if (c.note) {
+        return `${c.name}'s pick rate went from ${tb} to ${ta} of offers in the four weeks after the patch, ` +
+               `while comparable unchanged ${c.character} cards went from ${cb} to ${ca}. ` +
+               `The estimated effect, ${pp(h.beta_pts)} percentage points, is within noise at every time window: no clear change.`;
+      }
+      const dir = h.treated_rate_after > h.treated_rate_before ? 'up' : 'down';
+      return `In the four weeks after the patch, players picked ${c.name} in ${ta} of the times it was offered, ` +
+             `${dir} from ${tb}. Comparable unchanged ${c.character} cards went from ${cb} to ${ca} over the same weeks. ` +
+             `Adjusting for that, and for the mix of offers, the patch itself is credited with ` +
+             `${pp(h.beta_pts)} percentage points.`;
+    }
+
+    function niceTicks(lo, hi) {
+      const span = hi - lo;
+      const step = span > 30 ? 10 : span > 12 ? 5 : span > 6 ? 2 : 1;
+      const out = [];
+      for (let v = Math.ceil(lo / step) * step; v <= hi + 1e-9; v += step) out.push(v);
+      return out;
+    }
+
+    function hideTip() {
+      tip.hidden = true;
+      svg.querySelectorAll('g.on').forEach(g => g.classList.remove('on'));
+    }
+
+    function showTip(g, c, p) {
+      svg.querySelectorAll('g.on').forEach(n => n !== g && n.classList.remove('on'));
+      g.classList.add('on');
+      const isRef = p.se_pts == null;
+      const old = p.block === 'before';
+      const est = isRef ? '0 (reference)' : `${pp(p.coef_pts)} pp (± ${(1.96 * p.se_pts).toFixed(1)})`;
+      tip.innerHTML =
+        `<div class="tip-head${old ? ' old' : ''}">Week ${weekLabel(p.week)} · ${old ? 'old' : 'new'} build${isRef ? ' (reference)' : ''}</div>` +
+        `<table>` +
+        `<tr><td>${c.name} offered</td><td>${int(p.offers)}</td></tr>` +
+        `<tr><td>${c.name} picked</td><td>${int(p.picks)}</td></tr>` +
+        `<tr><td>${c.name} pick rate</td><td>${pct(p.pick_rate)}</td></tr>` +
+        `<tr><td>unchanged cards</td><td>${pct(p.control_pick_rate)}</td></tr>` +
+        `<tr><td>gap vs. week −1</td><td>${est}</td></tr>` +
+        `</table>`;
+      tip.hidden = false;
+      // position next to the point, inside the chart box
+      const box = chartBox.getBoundingClientRect();
+      const r = g.querySelector('.pt').getBoundingClientRect();
+      const cx = r.left + r.width / 2 - box.left, cy = r.top - box.top;
+      const tw = tip.offsetWidth, th = tip.offsetHeight;
+      let left = cx + 12;
+      if (left + tw > box.width) left = cx - tw - 12;
+      left = Math.max(0, left);
+      let top = cy - th / 2;
+      top = Math.max(-8, Math.min(top, box.height - th));
+      tip.style.left = left + 'px';
+      tip.style.top = top + 'px';
+    }
+
+    function render(i) {
+      const c = DATA.cards[i];
+      const h = c.headline;
+      pinned = null;
+      hideTip();
+      document.getElementById('spiro-change').textContent = `${c.character} · ${c.builds} · ${c.change_text}`;
+      const num = document.getElementById('spiro-effect-num');
+      num.textContent = pp(h.beta_pts);
+      num.classList.toggle('null', !!c.note);
+      document.getElementById('spiro-effect-text').textContent = effectSentence(c);
+
+      // scales
+      const pts = c.weeks;
+      let lo = Math.min(0, h.ci_lo_pts, ...pts.map(p => p.coef_pts - 1.96 * (p.se_pts || 0)));
+      let hi = Math.max(0, h.ci_hi_pts, ...pts.map(p => p.coef_pts + 1.96 * (p.se_pts || 0)));
+      const pad = (hi - lo) * 0.08;
+      lo -= pad; hi += pad;
+      const x = w => M.l + (w - (X0 - 0.5)) / (X1 - X0 + 1) * (W - M.l - M.r);
+      const y = v => M.t + (hi - v) / (hi - lo) * (H - M.t - M.b);
+
+      svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+      svg.querySelectorAll(':scope > :not(desc)').forEach(n => n.remove());
+      document.getElementById('spiro-svg-desc').textContent =
+        `Week-by-week change in ${c.name}'s pick rate relative to unchanged cards, from ${weekLabel(X0)} to ${weekLabel(X1)} weeks around the patch. ` +
+        `Average over weeks 0 to 3: ${pp(h.beta_pts)} percentage points.`;
+
+      for (const t of niceTicks(lo, hi)) {
+        el('line', { class: t === 0 ? 'zero' : 'grid', x1: M.l, x2: W - M.r, y1: y(t), y2: y(t) });
+        el('text', { class: 'tick', x: M.l - 6, y: y(t) + 3.5, 'text-anchor': 'end' }).textContent = t > 0 ? '+' + t : minus(t);
+      }
+      for (let w = X0; w <= X1; w += 2) {
+        el('text', { class: 'tick', x: x(w), y: H - M.b + 14, 'text-anchor': 'middle' }).textContent = weekLabel(w);
+      }
+      el('text', { class: 'lab', x: (M.l + W - M.r) / 2, y: H - 4, 'text-anchor': 'middle' }).textContent = 'weeks since the patch';
+      el('text', { class: 'lab', x: 0, y: 0, 'text-anchor': 'middle',
+                   transform: `translate(10 ${(M.t + H - M.b) / 2}) rotate(-90)` }).textContent = 'pick-rate gap (pp)';
+
+      // release line + weeks 0-3 band at the headline estimate
+      el('line', { class: 'release', x1: x(-0.5), x2: x(-0.5), y1: M.t, y2: H - M.b });
+      el('text', { class: 'tick', x: x(-0.5) + 4, y: M.t + 9 }).textContent = 'patch';
+      el('rect', { class: 'band', x: x(-0.5), width: x(3.5) - x(-0.5),
+                   y: y(h.ci_hi_pts), height: Math.max(1, y(h.ci_lo_pts) - y(h.ci_hi_pts)) });
+      el('line', { class: 'bandline', x1: x(-0.5), x2: x(3.5), y1: y(h.beta_pts), y2: y(h.beta_pts) });
+
+      // points
+      for (const p of pts) {
+        const isRef = p.se_pts == null;
+        const cx = x(p.week + (p.block === 'before' ? -0.15 : 0.15));
+        const g = el('g', { class: `${p.block}${isRef ? ' ref' : ''}`, tabindex: 0,
+                            'aria-label': `Week ${weekLabel(p.week)}, ${p.block === 'before' ? 'old' : 'new'} build: ${isRef ? 'reference' : pp(p.coef_pts) + ' points'}` });
+        if (!isRef) {
+          el('line', { class: 'err', x1: cx, x2: cx, y1: y(p.coef_pts - 1.96 * p.se_pts), y2: y(p.coef_pts + 1.96 * p.se_pts) }, g);
+        }
+        if (p.block === 'before') {
+          el('rect', { class: 'pt', x: cx - 3.5, y: y(p.coef_pts) - 3.5, width: 7, height: 7 }, g);
+        } else {
+          el('circle', { class: 'pt', cx, cy: y(p.coef_pts), r: 4 }, g);
+        }
+        el('rect', { class: 'hit', x: cx - 9, width: 18, y: M.t, height: H - M.t - M.b }, g);
+        g.addEventListener('pointerenter', () => { if (!pinned) showTip(g, c, p); });
+        g.addEventListener('pointerleave', () => { if (!pinned) hideTip(); });
+        g.addEventListener('focus', () => showTip(g, c, p));
+        g.addEventListener('blur', () => { if (!pinned) hideTip(); });
+        g.addEventListener('click', e => {
+          e.stopPropagation();
+          if (pinned === g) { pinned = null; hideTip(); } else { pinned = g; showTip(g, c, p); }
+        });
+      }
+    }
+
+    // effect explanation: hover, focus, or tap to pin
+    const setEffect = on => root.classList.toggle('show-effect', on);
+    effectBtn.addEventListener('pointerenter', () => setEffect(true));
+    effectBtn.addEventListener('pointerleave', () => setEffect(effectPinned));
+    effectBtn.addEventListener('focus', () => setEffect(true));
+    effectBtn.addEventListener('blur', () => setEffect(effectPinned));
+    effectBtn.addEventListener('click', () => { effectPinned = !effectPinned; setEffect(effectPinned); });
+
+    document.addEventListener('click', e => {
+      if (pinned && !chartBox.contains(e.target)) { pinned = null; hideTip(); }
+    });
+    sel.addEventListener('change', () => render(+sel.value));
+    root.querySelector('.spiro-open').addEventListener('click', () => { location.hash = 'spirometry'; });
+
+    const ps = DATA.patch_summary;
+    if (ps && ps.first && ps.second) {
+      document.getElementById('spiro-summary').textContent =
+        `Across all ${ps.first.n + ps.second.n} tweaks: the first patch moved pick rates by a median ` +
+        `${ps.first.median_abs_beta_pts.toFixed(1)} points (${ps.first.n_clear} of ${ps.first.n} clearly), ` +
+        `the second by ${ps.second.median_abs_beta_pts.toFixed(1)} (${ps.second.n_clear} of ${ps.second.n}).`;
+    }
+    render(0);
   })();
 </script>
 
