@@ -731,6 +731,8 @@
   .cite-chart .ms { stroke: var(--ink-faint); stroke-width: 1; stroke-dasharray: 2 3; }
   .cite-chart .ms-lab { font-family: var(--mono); font-size: 9px; fill: var(--ink-mid); }
   .cite-chart .hitcol { fill: transparent; cursor: pointer; }
+  /* no focus box after a tap/click on chart points; keyboard focus still shows it */
+  .spiro-chart g:focus:not(:focus-visible) { outline: none; }
   .cite-funding { font-size: 0.78rem; line-height: 1.6; color: var(--ink-mid); margin-top: 0.4rem; padding-top: 0.7rem; border-top: 1px solid var(--rule); }
   .cite-funding .skills-label { display: block; margin-bottom: 0.15rem; }
 
@@ -839,7 +841,6 @@
     .proj-detail { grid-template-columns: 1fr; gap: 2rem; }
     .panel-title { font-size: 2.6rem; }
     .spiro { padding: 1.1rem; border-radius: 12px; }
-    .cite-toggle { display: none; }
 
     .page-footer { padding: 1.5rem 1.25rem; flex-direction: column; gap: 0.25rem; align-items: flex-start; }
   }
@@ -1578,9 +1579,8 @@
     const svg = document.getElementById('cite-svg');
     const tip = document.getElementById('cite-tip');
     const box = document.getElementById('cite-chart');
-    const phone = window.matchMedia('(max-width: 800px)');   // phones get a static chart
     let W = 380, H = 230;
-    const M = { l: 34, r: 10, t: 22, b: 26 };
+    const M = { l: 34, r: 10, t: 34, b: 26 };
     let view = 'year', pinned = null;
 
     let cr = 0, ca = 0;
@@ -1615,7 +1615,6 @@
     function render() {
       W = Math.max(300, Math.round(box.clientWidth || 380));          // chart width = card width
       H = Math.round(Math.min(310, Math.max(220, W * 0.52)));
-      if (phone.matches) view = 'year';                   // phones: static per-year bars
       const cum = view === 'cum';
       pinned = null; hideTip();
       document.getElementById('cite-num').textContent = String(totalRef);
@@ -1641,16 +1640,26 @@
       for (const [y] of DATA) if ((y - x0) % 2 === 0) {
         el('text', { class: 'tick', x: x(y) + bw / 2, y: H - M.b + 14, 'text-anchor': 'middle' }).textContent = `'${String(y).slice(2)}`;
       }
+      const labs = [];
       for (const [y, lab] of MILESTONES) {
         const mx = x(y) + bw / 2;
-        el('line', { class: 'ms', x1: mx, x2: mx, y1: M.t - 6, y2: H - M.b });
-        const anchor = y === YTD ? 'end' : 'middle';
-        el('text', { class: 'ms-lab', x: y === YTD ? mx + bw / 2 : mx, y: M.t - 10, 'text-anchor': anchor }).textContent = lab;
+        const line = el('line', { class: 'ms', x1: mx, x2: mx, y1: M.t - 20, y2: H - M.b });
+        // PhD sits left of its line, later milestones right of theirs; the last one ends at the chart edge
+        const last = y === MILESTONES[MILESTONES.length - 1][0];
+        const anchor = last ? 'end' : (labs.length === 0 ? 'end' : 'start');
+        const tx = last ? Math.min(mx + bw / 2, W - M.r) : (anchor === 'end' ? mx - 3 : mx + 3);
+        const t = el('text', { class: 'ms-lab', x: tx, y: M.t - 22, 'text-anchor': anchor });
+        t.textContent = lab;
+        labs.push({ t, line });
       }
-      // keep the PhD / Roman team labels from colliding
-      const labs = svg.querySelectorAll('.ms-lab');
-      if (labs.length > 1) { labs[0].setAttribute('text-anchor', 'end'); labs[0].setAttribute('x', +labs[0].getAttribute('x') - 2);
-                             labs[1].setAttribute('text-anchor', 'start'); labs[1].setAttribute('x', +labs[1].getAttribute('x') + 2); }
+      // if a label runs into the previous one, drop it to a second row (and shorten its line to match)
+      for (let i = 1; i < labs.length; i++) {
+        const a = labs[i - 1].t.getBBox(), b = labs[i].t.getBBox();
+        if (a.width && b.x < a.x + a.width + 4 && labs[i - 1].t.getAttribute('y') === labs[i].t.getAttribute('y')) {
+          labs[i].t.setAttribute('y', M.t - 10);
+          labs[i].line.setAttribute('y1', M.t - 8);
+        }
+      }
 
       if (cum) {
         const pts = rows.map(d => [x(d.y) + bw / 2, yv(d.cr)]);
@@ -1660,7 +1669,7 @@
         el('path', { class: 'cum-line', d: 'M' + pts.map(p => p.join(',')).join(' L') });
       }
       rows.forEach((d, i) => {
-        const g = el('g', { class: `bar${d.y === YTD ? ' ytd' : ''}`, tabindex: phone.matches ? -1 : 0,
+        const g = el('g', { class: `bar${d.y === YTD ? ' ytd' : ''}`, tabindex: 0,
                             'aria-label': `${d.y}: ${d.r} citations from refereed papers, ${d.n} from other papers` });
         const bx = x(d.y) + bw * 0.16, w = bw * 0.68;
         if (cum) {
@@ -1669,7 +1678,6 @@
           el('rect', { class: 'bar-ref', x: bx, width: w, y: yv(d.r), height: yv(0) - yv(d.r), rx: 1.5 }, g);
           el('rect', { class: 'bar-non', x: bx, width: w, y: yv(d.r + d.n), height: yv(d.r) - yv(d.r + d.n), rx: 1.5 }, g);
         }
-        if (phone.matches) return;                               // static on phones
         el('rect', { class: 'hitcol', x: x(d.y), width: bw, y: M.t, height: H - M.t - M.b }, g);
         g.addEventListener('pointerenter', () => { if (!pinned) showTip(g, d); });
         g.addEventListener('pointerleave', () => { if (!pinned) hideTip(); });
@@ -1685,7 +1693,6 @@
       render();
     }));
     document.addEventListener('click', e => { if (pinned && !box.contains(e.target)) { pinned = null; hideTip(); } });
-    phone.addEventListener('change', render);
     let lastW = 0;
     new ResizeObserver(() => {
       const w = Math.round(box.clientWidth);
