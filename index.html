@@ -101,20 +101,21 @@
     padding-top: 60px;
   }
 
-  .hero-page.active { display: flex; }
+  .hero-page.active { display: grid; }
 
-  /* HERO */
+  /* HERO: two equal columns with the About page's margins and gap */
   .hero-page {
-    flex-direction: row;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 3rem;
+    align-items: center;
+    padding: 60px 4rem 0;
   }
 
   .hero-left {
-    flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 4rem 3.5rem;
-    background: var(--white);
+    padding: 2rem 0;
   }
 
   .hero-eyebrow {
@@ -156,7 +157,6 @@
   .hero-tagline {
     font-size: 1.05rem;
     color: var(--ink-mid);
-    max-width: 44ch;
     line-height: 1.75;
     margin-bottom: 2.5rem;
     font-weight: 400;
@@ -213,28 +213,22 @@
 
   .btn-secondary:hover { color: var(--ink); }
 
-  .hero-right {
-    width: 48%;
-    position: relative;
-    overflow: hidden;
-  }
+  .hero-right { min-width: 0; }
 
   .hero-right img {
     width: 100%;
-    height: 100%;
+    aspect-ratio: 4/3;          /* same shape and corners as the About photo */
     object-fit: cover;
     object-position: center;
+    border-radius: var(--radius);
     display: block;
   }
 
   .hero-right-caption {
-    position: absolute;
-    bottom: 1.25rem;
-    left: 1.25rem;
-    right: 1.25rem;
+    margin-top: 0.6rem;
     font-family: var(--mono);
     font-size: 10px;
-    color: rgba(255,255,255,0.75);
+    color: var(--ink-faint);
     letter-spacing: 0.06em;
     line-height: 1.5;
   }
@@ -442,7 +436,6 @@
     margin-top: 3rem;
     padding-top: 1.25rem;
     border-top: 1px solid var(--rule);
-    max-width: 1240px;
     font-size: 0.95rem;
     color: var(--ink-mid);
   }
@@ -521,7 +514,7 @@
     font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
     color: var(--green); margin-right: 0.6rem;
   }
-  .inline-skills { color: var(--ink-faint); font-size: 0.88em; }
+  .inline-skills { display: block; margin-top: 0.3rem; color: var(--ink-faint); font-size: 0.88em; }
   .panel-body { color: var(--ink-mid); font-size: 0.97rem; line-height: 1.7; margin-bottom: 1rem; }
   .panel-body p { margin-bottom: 0.75rem; }
 
@@ -550,11 +543,10 @@
   /* DS PROJECTS: two columns (questions | Spirometry interactive) */
   .ds-layout {
     display: grid;
-    /* left column fixed; the 2.5rem gap clears the hovered question box (scaled 1.07, shifted 1.5rem) by ~1rem */
-    grid-template-columns: minmax(0, 44rem) minmax(360px, 1fr);
-    gap: 2.5rem;
+    /* same two equal columns and 3rem gap as the About page; a hovered question (scaled 1.07) still clears the card */
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 3rem;
     align-items: start;
-    max-width: 1240px;
   }
   .ds-main { min-width: 0; }
   .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
@@ -674,7 +666,7 @@
   .spiro-open:hover { text-decoration: underline; }
   .spiro-open:focus-visible { outline: 2px solid var(--green); outline-offset: 3px; }
 
-  @media (max-width: 1240px) {
+  @media (max-width: 1000px) {
     .ds-layout { grid-template-columns: minmax(0, 1fr); gap: 2.5rem; }
     .spiro { max-width: 560px; }
   }
@@ -715,6 +707,32 @@
     cursor: zoom-in;
   }
   .zoom.full .zoom-stage img { max-width: none; max-height: none; cursor: zoom-out; }
+
+  /* CITATIONS CARD (Previous Research page; reuses the .spiro card styles) */
+  .cite-toggle { display: inline-flex; border: 1px solid var(--rule); border-radius: 999px; padding: 2px; margin-bottom: 0.9rem; }
+  .cite-tab {
+    all: unset; cursor: pointer;
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.04em; color: var(--ink-mid);
+    padding: 0.3rem 0.8rem; border-radius: 999px;
+  }
+  .cite-tab.on { background: var(--green); color: var(--on-accent); }
+  .cite-tab:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; }
+  .cite-big { display: flex; align-items: baseline; gap: 0.6rem; margin-bottom: 0.2rem; }
+  .cite-num { font-family: var(--display); font-size: 2.4rem; line-height: 1; color: var(--green); }
+  .cite-unit { font-size: 0.8rem; color: var(--ink-mid); line-height: 1.3; }
+  .cite-chart .bar-ref { fill: var(--green); }
+  .cite-chart .bar-non { fill: var(--ink-faint); opacity: 0.75; }
+  .cite-chart .bar.ytd .bar-ref, .cite-chart .bar.ytd .bar-non { opacity: 0.55; }
+  .cite-chart .bar.on .bar-ref { fill: var(--green-mid); }
+  .cite-chart .cum-area { fill: var(--green); opacity: 0.14; }
+  .cite-chart .cum-line { fill: none; stroke: var(--green); stroke-width: 2; }
+  .cite-chart .cum-line-all { fill: none; stroke: var(--ink-faint); stroke-width: 1.5; stroke-dasharray: 4 3; }
+  .cite-chart .cum-dot { fill: var(--green); }
+  .cite-chart .ms { stroke: var(--ink-faint); stroke-width: 1; stroke-dasharray: 2 3; }
+  .cite-chart .ms-lab { font-family: var(--mono); font-size: 9px; fill: var(--ink-mid); }
+  .cite-chart .hitcol { fill: transparent; cursor: pointer; }
+  .cite-funding { font-size: 0.78rem; line-height: 1.6; color: var(--ink-mid); margin-top: 0.4rem; padding-top: 0.7rem; border-top: 1px solid var(--rule); }
+  .cite-funding .skills-label { display: block; margin-bottom: 0.15rem; }
 
   /* CONTACT */
   .contact-row {
@@ -796,10 +814,9 @@
 
     .page { height: auto; min-height: 100vh; overflow: visible; }
     .hero-page { height: auto; min-height: 100vh; overflow: visible; }
-    .hero-page.active { flex-direction: column; }
-    .hero-left { padding: 2.5rem 1.25rem 2rem; }
+    .hero-page { grid-template-columns: 1fr; padding: 60px 1.25rem 2.5rem; }
+    .hero-left { padding: 2.5rem 0 2rem; }
     .hero-name { font-size: 3rem; }
-    .hero-right { width: 100%; height: 280px; }
 
     .page-inner { padding: 2rem 1.25rem; }
     .section-header { margin-bottom: 1.5rem; }
@@ -822,6 +839,7 @@
     .proj-detail { grid-template-columns: 1fr; gap: 2rem; }
     .panel-title { font-size: 2.6rem; }
     .spiro { padding: 1.1rem; border-radius: 12px; }
+    .cite-toggle { display: none; }
 
     .page-footer { padding: 1.5rem 1.25rem; flex-direction: column; gap: 0.25rem; align-items: flex-start; }
   }
@@ -858,7 +876,7 @@
     </div>
   </div>
   <div class="hero-right">
-    <img src="binary_dens.png" alt="FLASH AMR hydrodynamic simulation">
+    <img src="binary_dens_clean.png" alt="FLASH AMR hydrodynamic simulation">
     <p class="hero-right-caption">My FLASH adaptive-mesh refinement simulation of accretion in a stellar binary.</p>
   </div>
 </div>
@@ -1011,21 +1029,45 @@
       <span class="section-tag">03</span>
       <h2 class="section-title">Previous Research</h2>
     </div>
-    <p class="page-intro">My favorite part of research is collaboration, and I am co-author on 20+ peer-reviewed publications (700+ refereed citations) across astrophysics and computational modeling. Two of the questions I worked on are below; the full list is on NASA ADS for the morbidly curious.</p>
-    <a class="project-link intro-link" href="https://ui.adsabs.harvard.edu/public-libraries/mqNyNo_wS9a6PJsHrkLD1Q" target="_blank">full publication list via NASA ADS →</a>
+    <div class="ds-layout">
+      <div class="ds-main">
+        <p class="page-intro">My favorite part of research is collaboration, and I am co-author on 20+ peer-reviewed publications (700+ refereed citations) across astrophysics and computational modeling. Two of the questions I worked on are below; the full list is on NASA ADS for the morbidly curious.</p>
+        <a class="project-link intro-link" href="https://ui.adsabs.harvard.edu/public-libraries/mqNyNo_wS9a6PJsHrkLD1Q" target="_blank">full publication list via NASA ADS →</a>
 
-    <ol class="q-list">
-      <li><button class="q-btn" data-project="roman">
-        <span class="q-label">NASA Roman Space Telescope <span class="q-status">postdoc</span></span>
-        <span class="q-text">How do you design a survey for a telescope that doesn't exist yet?</span>
-        <span class="q-arrow" aria-hidden="true">→</span>
-      </button></li>
-      <li><button class="q-btn" data-project="gold">
-        <span class="q-label">Heavy-element origins <span class="q-status">PhD</span></span>
-        <span class="q-text">Where in the universe is gold made?</span>
-        <span class="q-arrow" aria-hidden="true">→</span>
-      </button></li>
-    </ol>
+        <ol class="q-list">
+          <li><button class="q-btn" data-project="roman">
+            <span class="q-label">NASA Roman Space Telescope <span class="q-status">postdoc</span></span>
+            <span class="q-text">How do you design a survey for a telescope that doesn't exist yet?</span>
+            <span class="q-arrow" aria-hidden="true">→</span>
+          </button></li>
+          <li><button class="q-btn" data-project="gold">
+            <span class="q-label">Heavy-element origins <span class="q-status">PhD</span></span>
+            <span class="q-text">Where in the universe is gold made?</span>
+            <span class="q-arrow" aria-hidden="true">→</span>
+          </button></li>
+        </ol>
+      </div>
+      <!-- CITATIONS CARD: data inline in the script below (from NASA ADS metrics export) -->
+      <aside class="spiro cite" id="cite" aria-label="Citations to my refereed papers by year">
+        <p class="spiro-kicker">Research · citations</p>
+        <h3 class="spiro-title">Citations to my refereed papers</h3>
+        <div class="cite-toggle" role="group" aria-label="Chart view">
+          <button type="button" class="cite-tab on" data-view="year" aria-pressed="true">per year</button>
+          <button type="button" class="cite-tab" data-view="cum" aria-pressed="false">cumulative</button>
+        </div>
+        <p class="cite-big"><span class="cite-num" id="cite-num"></span><span class="cite-unit" id="cite-unit"></span></p>
+        <div class="spiro-chart cite-chart" id="cite-chart">
+          <svg id="cite-svg" role="img" aria-labelledby="cite-desc"><desc id="cite-desc"></desc></svg>
+          <div class="spiro-tip" id="cite-tip" hidden></div>
+        </div>
+        <p class="spiro-legend">
+          <span><i class="lg lg-after"></i>from refereed papers</span>
+          <span><i class="lg lg-before"></i>from other papers</span>
+        </p>
+        <p class="spiro-summary cite-source">Source: NASA ADS. 2026 is year to date.</p>
+        <p class="cite-funding"><span class="skills-label">Supported by</span>NSF Graduate Research Fellowship · Eugene Cota-Robles Fellowship (PhD) · Heising-Simons Foundation · National Science Foundation (postdoc)</p>
+      </aside>
+    </div>
   </div>
   <div class="page-footer">
     <span class="footer-text">phillip macias · mountain view, ca</span>
@@ -1333,7 +1375,8 @@
     const chartBox = document.getElementById('spiro-chart');
     const sel = document.getElementById('spiro-select');
     const effectBtn = document.getElementById('spiro-effect');
-    const W = 380, H = 250, M = { l: 38, r: 8, t: 12, b: 34 };
+    let W = 380, H = 250;
+    const M = { l: 38, r: 8, t: 12, b: 34 };
     const X0 = -6, X1 = 8;
     let pinned = null;          // point group pinned by tap/click
     let effectPinned = false;
@@ -1419,6 +1462,8 @@
     }
 
     function render(i) {
+      W = Math.max(300, Math.round(chartBox.clientWidth || 380));   // chart width = card width
+      H = Math.round(Math.min(330, Math.max(240, W * 0.55)));
       const c = DATA.cards[i];
       const h = c.headline;
       pinned = null;
@@ -1500,6 +1545,11 @@
       if (pinned && !chartBox.contains(e.target)) { pinned = null; hideTip(); }
     });
     sel.addEventListener('change', () => render(+sel.value));
+    let lastW = 0;
+    new ResizeObserver(() => {
+      const w = Math.round(chartBox.clientWidth);
+      if (w && w !== lastW) { lastW = w; render(+sel.value); }
+    }).observe(chartBox);
     root.querySelector('.spiro-open').addEventListener('click', () => { location.hash = 'spirometry'; });
 
     const ps = DATA.patch_summary;
@@ -1510,6 +1560,138 @@
         `the second by ${ps.second.median_abs_beta_pts.toFixed(1)} (${ps.second.n_clear} of ${ps.second.n}).`;
     }
     render(0);
+  })();
+
+  // ---- Citations card (Previous Research). Data: NASA ADS metrics export; 2026 is year to date. ----
+  (function citationsCard() {
+    const root = document.getElementById('cite');
+    if (!root) return;
+    const DATA = [  // [year, citations from refereed papers, citations from non-refereed papers]
+      [2012, 2, 1], [2013, 4, 3], [2014, 4, 0], [2015, 5, 3], [2016, 5, 0],
+      [2017, 28, 2], [2018, 40, 0], [2019, 65, 3], [2020, 84, 5], [2021, 47, 1],
+      [2022, 61, 3], [2023, 67, 10], [2024, 82, 4], [2025, 98, 8], [2026, 108, 56],
+    ];
+    const YTD = 2026;
+    const MILESTONES = [[2019, 'PhD'], [2020, 'Roman team'], [2026, 'Roman launch']];
+
+    const NS = 'http://www.w3.org/2000/svg';
+    const svg = document.getElementById('cite-svg');
+    const tip = document.getElementById('cite-tip');
+    const box = document.getElementById('cite-chart');
+    const phone = window.matchMedia('(max-width: 800px)');   // phones get a static chart
+    let W = 380, H = 230;
+    const M = { l: 34, r: 10, t: 22, b: 26 };
+    let view = 'year', pinned = null;
+
+    let cr = 0, ca = 0;
+    const rows = DATA.map(([y, r, n]) => { cr += r; ca += r + n; return { y, r, n, cr, ca }; });
+    const totalRef = cr, totalNon = ca - cr;
+
+    function el(tag, a = {}, parent = svg) {
+      const e = document.createElementNS(NS, tag);
+      for (const k in a) e.setAttribute(k, a[k]);
+      parent.appendChild(e); return e;
+    }
+    const nice = v => { const s = v > 400 ? 200 : v > 150 ? 50 : v > 60 ? 25 : 10; return [s, Math.ceil(v / s) * s]; };
+
+    function hideTip() { tip.hidden = true; svg.querySelectorAll('.on').forEach(n => n.classList.remove('on')); }
+    function showTip(g, d) {
+      svg.querySelectorAll('.on').forEach(n => n !== g && n.classList.remove('on'));
+      g.classList.add('on');
+      tip.innerHTML =
+        `<div class="tip-head">${d.y}${d.y === YTD ? ' · year to date' : ''}</div><table>` +
+        `<tr><td>from refereed papers</td><td>${d.r}</td></tr>` +
+        `<tr><td>from other papers</td><td>${d.n}</td></tr>` +
+        `<tr><td>refereed, running total</td><td>${d.cr}</td></tr></table>`;
+      tip.hidden = false;
+      const b = box.getBoundingClientRect(), r = g.getBoundingClientRect();
+      const tw = tip.offsetWidth, th = tip.offsetHeight;
+      let left = r.left + r.width / 2 - b.left + 12;
+      if (left + tw > b.width) left = r.left + r.width / 2 - b.left - tw - 12;
+      tip.style.left = Math.max(0, left) + 'px';
+      tip.style.top = Math.max(-8, Math.min(r.top - b.top, b.height - th)) + 'px';
+    }
+
+    function render() {
+      W = Math.max(300, Math.round(box.clientWidth || 380));          // chart width = card width
+      H = Math.round(Math.min(310, Math.max(220, W * 0.52)));
+      if (phone.matches) view = 'year';                   // phones: static per-year bars
+      const cum = view === 'cum';
+      pinned = null; hideTip();
+      document.getElementById('cite-num').textContent = String(totalRef);
+      document.getElementById('cite-unit').textContent =
+        `citations from refereed papers, 2012–2026 (plus ${totalNon} from other papers)`;
+      const maxV = cum ? rows[rows.length - 1].ca : Math.max(...rows.map(d => d.r + d.n));
+      const [step, top] = nice(maxV);
+      const x0 = DATA[0][0], n = DATA.length;
+      const bw = (W - M.l - M.r) / n;
+      const x = y => M.l + (y - x0) * bw;                 // left edge of a year's slot
+      const yv = v => M.t + (1 - v / top) * (H - M.t - M.b);
+
+      svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+      svg.querySelectorAll(':scope > :not(desc)').forEach(e => e.remove());
+      document.getElementById('cite-desc').textContent = cum
+        ? `Cumulative citations to refereed papers, rising from ${rows[0].cr} in ${x0} to ${totalRef} in ${YTD}.`
+        : `Citations per year to refereed papers, from ${rows[0].r} in ${x0} to ${rows[n - 1].r} in ${YTD} (year to date).`;
+
+      for (let v = 0; v <= top; v += step) {
+        el('line', { class: v === 0 ? 'zero' : 'grid', x1: M.l, x2: W - M.r, y1: yv(v), y2: yv(v) });
+        el('text', { class: 'tick', x: M.l - 6, y: yv(v) + 3.5, 'text-anchor': 'end' }).textContent = v;
+      }
+      for (const [y] of DATA) if ((y - x0) % 2 === 0) {
+        el('text', { class: 'tick', x: x(y) + bw / 2, y: H - M.b + 14, 'text-anchor': 'middle' }).textContent = `'${String(y).slice(2)}`;
+      }
+      for (const [y, lab] of MILESTONES) {
+        const mx = x(y) + bw / 2;
+        el('line', { class: 'ms', x1: mx, x2: mx, y1: M.t - 6, y2: H - M.b });
+        const anchor = y === YTD ? 'end' : 'middle';
+        el('text', { class: 'ms-lab', x: y === YTD ? mx + bw / 2 : mx, y: M.t - 10, 'text-anchor': anchor }).textContent = lab;
+      }
+      // keep the PhD / Roman team labels from colliding
+      const labs = svg.querySelectorAll('.ms-lab');
+      if (labs.length > 1) { labs[0].setAttribute('text-anchor', 'end'); labs[0].setAttribute('x', +labs[0].getAttribute('x') - 2);
+                             labs[1].setAttribute('text-anchor', 'start'); labs[1].setAttribute('x', +labs[1].getAttribute('x') + 2); }
+
+      if (cum) {
+        const pts = rows.map(d => [x(d.y) + bw / 2, yv(d.cr)]);
+        const ptsAll = rows.map(d => [x(d.y) + bw / 2, yv(d.ca)]);
+        el('path', { class: 'cum-area', d: `M${pts[0][0]},${yv(0)} ` + pts.map(p => `L${p[0]},${p[1]}`).join(' ') + ` L${pts[n - 1][0]},${yv(0)} Z` });
+        el('path', { class: 'cum-line-all', d: 'M' + ptsAll.map(p => p.join(',')).join(' L') });
+        el('path', { class: 'cum-line', d: 'M' + pts.map(p => p.join(',')).join(' L') });
+      }
+      rows.forEach((d, i) => {
+        const g = el('g', { class: `bar${d.y === YTD ? ' ytd' : ''}`, tabindex: phone.matches ? -1 : 0,
+                            'aria-label': `${d.y}: ${d.r} citations from refereed papers, ${d.n} from other papers` });
+        const bx = x(d.y) + bw * 0.16, w = bw * 0.68;
+        if (cum) {
+          el('circle', { class: 'cum-dot', cx: x(d.y) + bw / 2, cy: yv(d.cr), r: 3 }, g);
+        } else {
+          el('rect', { class: 'bar-ref', x: bx, width: w, y: yv(d.r), height: yv(0) - yv(d.r), rx: 1.5 }, g);
+          el('rect', { class: 'bar-non', x: bx, width: w, y: yv(d.r + d.n), height: yv(d.r) - yv(d.r + d.n), rx: 1.5 }, g);
+        }
+        if (phone.matches) return;                               // static on phones
+        el('rect', { class: 'hitcol', x: x(d.y), width: bw, y: M.t, height: H - M.t - M.b }, g);
+        g.addEventListener('pointerenter', () => { if (!pinned) showTip(g, d); });
+        g.addEventListener('pointerleave', () => { if (!pinned) hideTip(); });
+        g.addEventListener('focus', () => showTip(g, d));
+        g.addEventListener('blur', () => { if (!pinned) hideTip(); });
+        g.addEventListener('click', e => { e.stopPropagation(); if (pinned === g) { pinned = null; hideTip(); } else { pinned = g; showTip(g, d); } });
+      });
+    }
+
+    root.querySelectorAll('.cite-tab').forEach(b => b.addEventListener('click', () => {
+      view = b.dataset.view;
+      root.querySelectorAll('.cite-tab').forEach(t => { const on = t === b; t.classList.toggle('on', on); t.setAttribute('aria-pressed', String(on)); });
+      render();
+    }));
+    document.addEventListener('click', e => { if (pinned && !box.contains(e.target)) { pinned = null; hideTip(); } });
+    phone.addEventListener('change', render);
+    let lastW = 0;
+    new ResizeObserver(() => {
+      const w = Math.round(box.clientWidth);
+      if (w && w !== lastW) { lastW = w; render(); }
+    }).observe(box);
+    render();
   })();
 </script>
 
