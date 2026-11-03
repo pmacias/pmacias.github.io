@@ -341,6 +341,7 @@
     margin-bottom: 2.5rem;
   }
   .project-link.intro-link { margin: -1.5rem 0 2.5rem; }
+  .project-link.outro-link { margin: 2rem 0 0; }
 
   .q-list { list-style: none; max-width: 900px; }
   .q-list li { position: relative; }
@@ -959,7 +960,7 @@
     </div>
     <div class="ds-layout">
       <div class="ds-main">
-      <p class="page-intro">Here are a few projects that I scoped and carried out on my own (with the help of Claude Code) to practice modern statistical methods on real, (occasionally) messy public data.</p>
+      <p class="page-intro">Here are a few projects that I scoped and carried out on my own (with the help of Claude Code) to practice modern statistical methods on real, occasionally messy public data.</p>
 
       <ol class="q-list">
         <li><button class="q-btn" data-project="flashpoint">
@@ -1028,12 +1029,11 @@
   <div class="page-inner">
     <div class="section-header">
       <span class="section-tag">03</span>
-      <h2 class="section-title">Previous Research</h2>
+      <h2 class="section-title">Astrophysics Research</h2>
     </div>
     <div class="ds-layout">
       <div class="ds-main">
-        <p class="page-intro">My favorite part of research is collaboration, and I am co-author on 20+ peer-reviewed publications (700+ refereed citations) across astrophysics and computational modeling. Two of the questions I worked on are below; the full list is on NASA ADS for the morbidly curious.</p>
-        <a class="project-link intro-link" href="https://ui.adsabs.harvard.edu/public-libraries/mqNyNo_wS9a6PJsHrkLD1Q" target="_blank">full publication list via NASA ADS →</a>
+        <p class="page-intro">My favorite part of research is collaboration, and I am co-author on 20+ peer-reviewed publications (700+ refereed citations) across astrophysics and computational modeling. Some highlights are shown below; full publication list (2026) is linked at the bottom for the morbidly curious.</p>
 
         <ol class="q-list">
           <li><button class="q-btn" data-project="roman">
@@ -1046,7 +1046,13 @@
             <span class="q-text">Where in the universe is gold made?</span>
             <span class="q-arrow" aria-hidden="true">→</span>
           </button></li>
+          <li><button class="q-btn" data-project="binaries">
+            <span class="q-label">Interacting binary stars <span class="q-status">PhD</span></span>
+            <span class="q-text">What happens when one star pulls gas off another?</span>
+            <span class="q-arrow" aria-hidden="true">→</span>
+          </button></li>
         </ol>
+        <a class="project-link outro-link" href="https://ui.adsabs.harvard.edu/public-libraries/mqNyNo_wS9a6PJsHrkLD1Q" target="_blank">full publication list via NASA ADS →</a>
       </div>
       <!-- CITATIONS CARD: data inline in the script below (from NASA ADS metrics export) -->
       <aside class="spiro cite" id="cite" aria-label="Citations to my refereed papers by year">
@@ -1162,6 +1168,22 @@
     <figure class="panel-fig">
       <a class="fig-slot has-img paper" href="figures/roman_fom.png" data-zoom title="Click to enlarge"><img src="figures/roman_fom.png" alt="Line plot of projected dark energy figure of merit against the number of low-redshift Type Ia supernovae. The figure of merit rises steeply from about 295 with the Pantheon low-z sample, past the NASA requirement of 325.5, to about 445 with a 2,000-supernova spectroscopic sample and about 475 with the full sample." loading="lazy"></a>
       <figcaption>Projected Dark Energy Figure of Merit as a function of number of low-redshift (nearby) Type Ia Supernovae for the Roman High Latitude Time Domain Survey.</figcaption>
+    </figure>
+  </article>
+
+  <article class="proj-detail" id="detail-binaries" data-page="research" hidden>
+    <div class="panel-text">
+      <p class="panel-kicker"><span class="q-status">PhD · 2012–2019</span></p>
+      <h2 class="panel-title">Interacting binary stars</h2>
+      <p class="panel-q">What happens when one star pulls gas off another?</p>
+      <p class="panel-tech"><span class="skills-label">Skills</span>Adaptive-mesh-refinement hydrodynamic simulation · HPC workflows · volumetric data visualization</p>
+      <div class="panel-body">
+        <p>Many stars, including most massive ones, have a companion close enough to interact with during their lifetimes. Using supercomputers, our team simulated several of these interactions to better understand their outcomes and electromagnetic signatures in the night sky.</p>
+      </div>
+    </div>
+    <figure class="panel-fig">
+      <a class="fig-slot has-img paper" href="figures/hmcnc.png" data-zoom title="Click to enlarge"><img src="figures/hmcnc.png" alt="Gas density map from a simulation of two white dwarfs: a stream of gas flows from the larger star on the left and swirls around the smaller star on the right." loading="lazy"></a>
+      <figcaption>2-D adaptive-mesh-refinement (AMR) simulation, run in FLASH, of accretion between two stellar remnants (white dwarfs).</figcaption>
     </figure>
   </article>
 
