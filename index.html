@@ -635,7 +635,8 @@
 
   .spiro-tip {
     position: absolute; z-index: 5;
-    width: 16.5rem;
+    width: max-content;                      /* size to the content... */
+    max-width: min(19rem, 100%);             /* ...but never wider than the chart */
     background: var(--white); color: var(--ink);
     border: 1px solid var(--rule); border-radius: 10px;
     box-shadow: 0 10px 30px var(--lift);
@@ -647,7 +648,8 @@
   .spiro-tip .tip-head { font-family: var(--mono); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--green); margin-bottom: 0.25rem; }
   .spiro-tip .tip-head.old { color: var(--ink-faint); }
   .spiro-tip table { border-collapse: collapse; width: 100%; }
-  .spiro-tip td { padding: 0.05rem 0; color: var(--ink-mid); }
+  .spiro-tip td { padding: 0.05rem 0; color: var(--ink-mid); white-space: nowrap; }
+  .spiro-tip td.tip-note { padding-top: 0; text-align: right; font-size: 0.68rem; color: var(--ink-faint); }
   .spiro-tip td + td { text-align: right; color: var(--ink); font-variant-numeric: tabular-nums; padding-left: 0.75rem; white-space: nowrap; }
 
   .spiro-legend { display: flex; flex-wrap: wrap; gap: 0.4rem 1rem; font-size: 0.75rem; color: var(--ink-mid); margin: 0.5rem 0 0.9rem; }
@@ -1005,9 +1007,9 @@
         <p class="spiro-legend">
           <span><i class="lg lg-before"></i>old build</span>
           <span><i class="lg lg-after"></i>new build</span>
-          <span><i class="lg lg-band"></i>weeks 0–3 average</span>
+          <span><i class="lg lg-band"></i>weeks 0–3 average (95%, placebo-calibrated)</span>
         </p>
-        <p class="spiro-caption">Difference-in-differences estimates of how players' card picks in the deckbuilding game <i>Slay the Spire 2</i> changed after balance patches, relative to comparable unchanged cards. Selected examples; hover or tap a point for its numbers.</p>
+        <p class="spiro-caption">Difference-in-differences estimates of how players' card picks in the deckbuilding game <i>Slay the Spire 2</i> changed after balance patches, relative to comparable unchanged cards. Selected examples; hover or tap a point for its numbers. The shaded band is widened to pass a placebo test on unchanged cards; weekly bars show sampling error only.</p>
         <p class="spiro-summary" id="spiro-summary"></p>
         <button type="button" class="spiro-open" data-project="spirometry">about the project →</button>
       </aside>
@@ -1404,6 +1406,14 @@
     let pinned = null;          // point group pinned by tap/click
     let effectPinned = false;
 
+    // Placebo calibration (Spirometry SPIROMETRY.md, weeks 0–3): fake "effects" on unchanged cards
+    // scatter 4.10x (first patch) / 2.67x (second) wider than their clustered SEs imply, so the
+    // headline interval is widened by that factor. Weekly bars were not placebo-tested: sampling error only.
+    const CAL = { first: 4.10, second: 2.67 };
+    function calCI(c) {
+      const h = c.headline, f = CAL[c.patch] || 1, half = (h.ci_hi_pts - h.ci_lo_pts) / 2 * f;
+      return [h.beta_pts - half, h.beta_pts + half];
+    }
     const minus = s => String(s).replace('-', '−');
     const pp = (v, d = 1) => (v > 0 ? '+' : '') + minus(v.toFixed(d));
     const pct = v => minus((100 * v).toFixed(1)) + '%';
@@ -1438,7 +1448,8 @@
       return `In the four weeks after the patch, players picked ${c.name} in ${ta} of the times it was offered, ` +
              `${dir} from ${tb}. Comparable unchanged ${c.character} cards went from ${cb} to ${ca} over the same weeks. ` +
              `Adjusting for that, and for the mix of offers, the patch itself is credited with ` +
-             `${pp(h.beta_pts)} percentage points.`;
+             `${pp(h.beta_pts)} percentage points (95% interval ${pp(calCI(c)[0])} to ${pp(calCI(c)[1])}, ` +
+             `widened to pass a placebo test on unchanged cards).`;
     }
 
     function niceTicks(lo, hi) {
@@ -1468,6 +1479,7 @@
         `<tr><td>${c.name} pick rate</td><td>${pct(p.pick_rate)}</td></tr>` +
         `<tr><td>unchanged cards</td><td>${pct(p.control_pick_rate)}</td></tr>` +
         `<tr><td>gap vs. week −1</td><td>${est}</td></tr>` +
+        (isRef ? '' : `<tr><td class="tip-note" colspan="2">sampling error only</td></tr>`) +
         `</table>`;
       tip.hidden = false;
       // position next to the point, inside the chart box
@@ -1499,8 +1511,9 @@
 
       // scales
       const pts = c.weeks;
-      let lo = Math.min(0, h.ci_lo_pts, ...pts.map(p => p.coef_pts - 1.96 * (p.se_pts || 0)));
-      let hi = Math.max(0, h.ci_hi_pts, ...pts.map(p => p.coef_pts + 1.96 * (p.se_pts || 0)));
+      const [bandLo, bandHi] = calCI(c);
+      let lo = Math.min(0, bandLo, ...pts.map(p => p.coef_pts - 1.96 * (p.se_pts || 0)));
+      let hi = Math.max(0, bandHi, ...pts.map(p => p.coef_pts + 1.96 * (p.se_pts || 0)));
       const pad = (hi - lo) * 0.08;
       lo -= pad; hi += pad;
       const x = w => M.l + (w - (X0 - 0.5)) / (X1 - X0 + 1) * (W - M.l - M.r);
@@ -1527,7 +1540,7 @@
       el('line', { class: 'release', x1: x(-0.5), x2: x(-0.5), y1: M.t, y2: H - M.b });
       el('text', { class: 'tick', x: x(-0.5) + 4, y: M.t + 9 }).textContent = 'patch';
       el('rect', { class: 'band', x: x(-0.5), width: x(3.5) - x(-0.5),
-                   y: y(h.ci_hi_pts), height: Math.max(1, y(h.ci_lo_pts) - y(h.ci_hi_pts)) });
+                   y: y(bandHi), height: Math.max(1, y(bandLo) - y(bandHi)) });
       el('line', { class: 'bandline', x1: x(-0.5), x2: x(3.5), y1: y(h.beta_pts), y2: y(h.beta_pts) });
 
       // points
