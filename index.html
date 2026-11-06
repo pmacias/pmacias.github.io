@@ -1411,7 +1411,9 @@
     // headline interval is widened by that factor. Weekly bars were not placebo-tested: sampling error only.
     const CAL = { first: 4.10, second: 2.67 };
     function calCI(c) {
-      const h = c.headline, f = CAL[c.patch] || 1, half = (h.ci_hi_pts - h.ci_lo_pts) / 2 * f;
+      const h = c.headline, f = CAL[c.patch] || 1;
+      // ±2 calibrated SEs (same cutoff as the repo's calibrated |z| > 2 counts); stored CI is ±1.96 SE
+      const half = (h.ci_hi_pts - h.ci_lo_pts) / 2 / 1.96 * 2 * f;
       return [h.beta_pts - half, h.beta_pts + half];
     }
     const minus = s => String(s).replace('-', '−');
